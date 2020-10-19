@@ -2318,6 +2318,42 @@ footer {
   background-repeat: no-repeat;
   background-color: #2f3542; }
 
+.task-translation {
+  background-image: url("../img/translate.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #5f5f5f; }
+
+.task-neo {
+  background-image: url("../img/computer.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #373cff; }
+
+.task-flat {
+  background-image: url("../img/roller.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #ff2f4d; }
+
+.task-repair {
+  background-image: url("../img/repair.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #232323; }
+
+.task-beauty {
+  background-image: url("../img/hairdryer.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #ff4dd1; }
+
+.task-photo {
+  background-image: url("../img/camera.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #ff9245; }
+
 .landing-task-description {
   padding-left: 20px;
   padding-right: 10px;
