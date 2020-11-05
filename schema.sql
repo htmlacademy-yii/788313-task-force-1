@@ -67,8 +67,9 @@ status_id статусы заданий
 --Заполнение с помощью json
 CREATE TABLE settings (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    setting TEXT NOT NULL
+    users_id INT NOT NULL,
+    setting TEXT NOT NULL,
+    FOREIGN KEY (users_id) REFERENCES users(id)
 );
 
 
