@@ -1,6 +1,6 @@
 <?php
 
-namespace scr\TaskForce;
+namespace scr;
 
 class TaskForce implements TaskInterface
 {
