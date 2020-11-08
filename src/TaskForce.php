@@ -1,6 +1,6 @@
 <?php
 
-namespace scr\TaskForce;
+namespace scr;
 
 class TaskForce implements TaskInterface
 {
@@ -21,7 +21,7 @@ class TaskForce implements TaskInterface
         $this->_idClient = $idClient;
     }
 
-    public function statusMap(string $status = '')
+    public function statusMap (string $status = '')
     {
         $statusMap = [
             TaskForce::STATUS_NEW => "Новое",
