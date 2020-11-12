@@ -9,6 +9,7 @@ CREATE TABLE users (
     category_id VARCHAR(25) NOT NULL,
     date_reg DATETIME NOT NULL,
     name VARCHAR(50) NOT NULL,
+    status VARCHAR(5) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     phone VARCHAR(11) NOT NULL,
     skype VARCHAR(40) NOT NULL,
@@ -24,6 +25,11 @@ CREATE TABLE users (
     FOREIGN KEY (city_id) REFERENCES cities(id),
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
+/*
+status
+false-заказчик
+true-исполнитель
+*/
 
 CREATE TABLE categories (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -42,7 +48,6 @@ CREATE TABLE tasks (
     title VARCHAR(50) NOT NULL,
     description TEXT NOT NULL,
     img VARCHAR(250) NOT NULL,
-    status INT NOT NULL,
     price INT NOT NULL,
     date_end DATE,
     user_id INT NOT NULL,

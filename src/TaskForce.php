@@ -1,68 +1,69 @@
 <?php
 
-namespace scr;
+namespace TaskForce;
 
 class TaskForce implements TaskInterface
 {
-    const STATUS_NEW = 'New';
-    const STATUS_CANCEL = 'Cancel';
-    const STATUS_WORK = 'Work';
-    const STATUS_READY = 'Ready';
-    const STATUS_FAILED = 'Failed';
-
-
     private $_idPerformer;
     private $_idClient;
+    private $_idCurrentClient;
+    private $_activeStatus;
 
-    public $_activeStatus = TaskForce::STATUS_NEW;
+    private $_status;
 
-    public function __construct (int $idPerformer, int $idClient) {
+    public function __construct(int $idPerformer, int $idClient, int $idCurrentClient, int $activeStatus)
+    {
         $this->_idPerformer = $idPerformer;
         $this->_idClient = $idClient;
-    }
+        $this->_idCurrentClient = $idCurrentClient;
+        $this->_activeStatus = $activeStatus;
 
-    public function statusMap (string $status = '')
-    {
-        $statusMap = [
-            TaskForce::STATUS_NEW => "Новое",
-            TaskForce::STATUS_CANCEL => "Отменено",
-            TaskForce::STATUS_WORK => "В работе",
-            TaskForce::STATUS_READY => "Выполнено",
-            TaskForce::STATUS_FAILED => "Провалено"
-        ];
-        if (!$status) {
-            return $statusMap;
+        for ($i = 1; $i <= 5; $i++) {
+            $statusName = "Status" . $i;
+            $this->_status[$i] = new $statusName;
         }
-        return $statusMap[$status] ?? $statusMap;
     }
 
-    public function availableStatus (string $status = '')
+    public function languageMap(int $status)
+    {
+        $languageMap = [
+            1 => "Новое",
+            2 => "Отменено",
+            3 => "В работе",
+            4 => "Выполнено",
+            5 => "Провалено"
+        ];
+        return $language[$status] ?? $languageMap;
+    }
+
+    public function availableStatus(int $status)
     {
         $statusMap = [
-            TaskForce::STATUS_NEW => [
-                TaskForce::STATUS_CANCEL,
-                TaskForce::STATUS_WORK
+            1 => [
+                2,
+                3
             ],
-            TaskForce::STATUS_WORK => [
-                TaskForce::STATUS_READY,
-                TaskForce::STATUS_FAILED
+            3 => [
+                4,
+                5
             ]
         ];
-
         if (!$status) {
             return $statusMap;
         }
         return $statusMap[$status] ?? [];
     }
 
-    public function setStatus (string $status)
+    public function setStatus(int $taskStatus, bool $statusUser)
     {
         $availableStatus = $this->availableStatus($this->_activeStatus);
-        if (in_array($status, $availableStatus)) {
-            $this->_activeStatus = $status;
-            return $status;
+        if (in_array($taskStatus, $availableStatus)) {
+            if ($taskStatus != 3) {
+                return ($this->_status[$taskStatus]->Verification($this->_idPerformer, $this->_idClient, $this->_idCurrentClient)) ?? $taskStatus;
+            } else {
+                if ($statusUser) {return ($this->_status[$taskStatus]->Verification($this->_idPerformer, $this->_idClient, $this->_idCurrentClient)) ?? $taskStatus;}
+            }
         }
-        return $this->_activeStatus;
     }
 
 

@@ -1,7 +1,7 @@
 # Личный проект «TaskForce»
 
 * Студент: [Влад](https://up.htmlacademy.ru/yii/1/user/788313).
-* Наставник: [Алексей Колесников](https://htmlacademy.ru/profile/id1514491).
+* Наставник: [Алексей Марунин](https://htmlacademy.ru/profile/id1402867).
 
 ---
 
