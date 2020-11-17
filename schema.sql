@@ -9,7 +9,7 @@ CREATE TABLE users (
     category_id VARCHAR(25) NOT NULL,
     date_reg DATETIME NOT NULL,
     name VARCHAR(50) NOT NULL,
-    status VARCHAR(5) NOT NULL,
+    status INT NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     phone VARCHAR(11) NOT NULL,
     skype VARCHAR(40) NOT NULL,
@@ -27,8 +27,8 @@ CREATE TABLE users (
 );
 /*
 status
-false-заказчик
-true-исполнитель
+0-заказчик
+1-исполнитель
 */
 
 CREATE TABLE categories (

@@ -6,100 +6,105 @@ namespace TaskForce;
 
 abstract class Action
 {
-    abstract public function Title($title);
+    abstract public function Title(int $idPerformer, int $clientId);
 
     abstract public function Name();
 
-    abstract public function Verification(int $idPerformer, int $idClient, int $idCurrentClient);
+    abstract public function Verification(int $idPerformer, int $clientId, int $idCurrentClient);
 
 }
 
-class Status1 extends Action
+class StatusNew extends Action
 {
-    public function Title($title)
+    public function Title(int $idPerformer, int $clientId)
     {
-        return $title;
+        $title = new TaskForce($idPerformer, $clientId);
+        return $title->languageMap(1);
     }
 
     public function Name()
     {
-        return "New";
+        return 1;
     }
 
-    public function Verification(int $idPerformer, int $idClient, int $idCurrentClient)
+    public function Verification(int $idPerformer, int $clientId, int $idCurrentClient)
     {
-        return true;
+        return 1;
     }
 }
 
-class Status2 extends Action
+class StatusCancel extends Action
 {
-    public function Title($title)
+    public function Title(int $idPerformer, int $clientId)
     {
-        return $title;
+        $title = new TaskForce($idPerformer, $clientId);
+        return $title->languageMap(2);
     }
 
     public function Name()
     {
-        return "Cancel";
+        return 2;
     }
 
-    public function Verification(int $idPerformer, int $idClient, int $idCurrentClient)
+    public function Verification(int $idPerformer, int $clientId, int $idCurrentClient)
     {
-        return ($this->$idClient = $idCurrentClient) ? "true" : "false";
+        return ($this->$clientId === $idCurrentClient) ? 1 : 0;
     }
 }
 
-class Status3 extends Action
+class StatusWork extends Action
 {
-    public function Title($title)
+    public function Title(int $idPerformer, int $clientId)
     {
-        return $title;
+        $title = new TaskForce($idPerformer, $clientId);
+        return $title->languageMap(3);
     }
 
     public function Name()
     {
-        return "Work";
+        return 3;
     }
 
-    public function Verification(int $idPerformer, int $idClient, int $idCurrentClient)
+    public function Verification(int $idPerformer, int $clientId, int $idCurrentClient)
     {
-        return ($this->$idClient = $idCurrentClient) ? "true" : "false";
+        return ($this->$clientId === $idCurrentClient) ? 1 : 0;
     }
 }
 
-class Status4 extends Action
+class StatusReady extends Action
 {
-    public function Title($title)
+    public function Title(int $idPerformer, int $clientId)
     {
-        return $title;
+        $title = new TaskForce($idPerformer, $clientId);
+        return $title->languageMap(4);
     }
 
     public function Name()
     {
-        return "Ready";
+        return 4;
     }
 
-    public function Verification(int $idPerformer, int $idClient, int $idCurrentClient)
+    public function Verification(int $idPerformer, int $clientId, int $idCurrentClient)
     {
-        return ($this->$idClient = $idCurrentClient) ? "true" : "false";
+        return ($this->$clientId === $idCurrentClient) ? 1 : 0;
     }
 }
 
-class Status5 extends Action
+class StatusFailed extends Action
 {
-    public function Title($title)
+    public function Title(int $idPerformer, int $clientId)
     {
-        return $title;
+        $title = new TaskForce($idPerformer, $clientId);
+        return $title->languageMap(5);
     }
 
     public function Name()
     {
-        return "Failed";
+        return 5;
     }
 
-    public function Verification(int $idPerformer, int $idClient, int $idCurrentClient)
+    public function Verification(int $idPerformer, int $clientId, int $idCurrentClient)
     {
-        return ($this->$idPerformer = $idCurrentClient) ? "true" : "false";
+        return ($this->$idPerformer === $idCurrentClient) ? 1 : 0;
     }
 }
