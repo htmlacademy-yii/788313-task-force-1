@@ -6,6 +6,7 @@ class TaskForce implements TaskInterface
 {
     private $_idPerformer;
     private $_clientId;
+    private $_idCurrentClient;
 
     private $_status1;
     private $_status2;
@@ -19,11 +20,11 @@ class TaskForce implements TaskInterface
         $this->_clientId = $clientId;
         $this->_idCurrentClient = $idCurrentClient;
 
-        $_status1 = new StatusNew();
-        $_status2 = new StatusCancel();
-        $_status3 = new StatusWork();
-        $_status4 = new StatusReady();
-        $_status5 = new StatusFailed();
+        $this->_status1 = new StatusNew();
+        $this->_status2 = new StatusCancel();
+        $this->_status3 = new StatusWork();
+        $this->_status4 = new StatusReady();
+        $this->_status5 = new StatusFailed();
     }
 
     public function languageMap($status)
@@ -63,9 +64,9 @@ class TaskForce implements TaskInterface
         if (in_array($taskStatus, $availableStatus)) {
             if ($taskStatus !== 3) {
 
-                return ($this->_status[$taskStatus]->Verification($this->_idPerformer, $this->_clientId, $this->_idCurrentClient)) ?? $taskStatus;
+                return ($this->_status{$taskStatus}->Verification($this->_idPerformer, $this->_clientId, $this->_idCurrentClient)) ?? $taskStatus;
             } else {
-                if ($statusUser) {return ($this->_status[$taskStatus]->Verification($this->_idPerformer, $this->_clientId, $this->_idCurrentClient)) ?? $taskStatus;}
+                if ($statusUser) {return ($this->_status{$taskStatus}->Verification($this->_idPerformer, $this->_clientId, $this->_idCurrentClient)) ?? $taskStatus;}
             }
         }
     }
