@@ -51,10 +51,11 @@ CREATE TABLE tasks (
     price INT NOT NULL,
     date_end DATE,
     user_id INT NOT NULL,
+    idPerformer INT NOT NULL,
     category_id INT NOT NULL,
     city_id INT NOT NULL,
     location VARCHAR(100),
-    status_id INT NOT NULL,
+    status_id VARCHAR(20) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (city_id) REFERENCES cities(id),
     FOREIGN KEY (category_id) REFERENCES categories(id)
@@ -62,11 +63,11 @@ CREATE TABLE tasks (
 
 /*
 status_id статусы заданий
-1-New,
-2-Cancel,
-3-Work,
-4-Ready,
-5-Failed
+New,
+Cancel,
+Work,
+Ready,
+Failed
 */
 
 --Заполнение с помощью json
