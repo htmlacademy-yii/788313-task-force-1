@@ -18,6 +18,6 @@ class RespondAction extends Action
 
     public function Verification(int $idPerformer, int $clientId, int $idCurrentClient): bool
     {
-        return $idPerformer !== $idCurrentClient;
+        return $idPerformer !== $idCurrentClient && $clientId !== $idCurrentClient;
     }
 }
