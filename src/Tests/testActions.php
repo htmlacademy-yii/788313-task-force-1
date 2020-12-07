@@ -19,10 +19,13 @@ $clientId = 1;
 $idPerformer = 2;
 
 $task = new Task($idPerformer, $clientId, $activeStatus);
-echo('Метод Task->getNextStatus');
+echo('Метод Task->getNextStatus действие - Respond');
 var_dump($task->getNextStatus('Respond'));
+echo('Метод Task->getNextStatus действие - Undo');
 var_dump($task->getNextStatus('Undo'));
+echo('Метод Task->getNextStatus действие - Refuse');
 var_dump($task->getNextStatus('Refuse'));
+echo('Метод Task->getNextStatus действие - Done');
 var_dump($task->getNextStatus('Done'));
 
 echo('Метод Task->actions');
