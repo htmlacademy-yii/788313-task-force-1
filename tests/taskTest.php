@@ -1,10 +1,6 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use TaskForce\Action\UndoAction;
-use TaskForce\Action\RespondAction;
-use TaskForce\Action\RefuseAction;
-use TaskForce\Action\DoneAction;
 
 class taskTest extends TestCase
 {
@@ -72,6 +68,7 @@ class taskTest extends TestCase
     }
 
     /**
+     * Тест метода для получения доступных действий для указанного статуса
      * @dataProvider AvailableActionsProvider
      * @param $perfermerId //Исполнитель
      * @param $clientId //Клиент
