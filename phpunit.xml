@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit colors="true" bootstrap="vendor/autoload.php">
+    <testsuite name="Task">
+        <directory suffix="Test.php">./tests</directory>
+    </testsuite>
+    <filter>
+        <whitelist processUncoveredFilesFromWhiteList="true">
+            <directory suffix=".php">./tests</directory>
+        </whitelist>
+    </filter>
+</phpunit>

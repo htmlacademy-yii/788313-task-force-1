@@ -1,7 +1,7 @@
 <?php
 
 
-namespace TaskForce\Action;
+namespace TaskForce\action;
 
 
 class UndoAction extends Action
@@ -16,8 +16,8 @@ class UndoAction extends Action
         return 'Undo';
     }
 
-    public function Verification(int $idPerformer, int $clientId, int $idCurrentClient): bool
+    public function Verification(int $performerId, int $clientId, int $currentClientId): bool
     {
-        return $clientId === $idCurrentClient;
+        return $clientId === $currentClientId;
     }
 }

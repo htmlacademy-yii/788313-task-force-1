@@ -3067,7 +3067,7 @@ Dropzone.createElement = function (string) {
   return div.childNodes[0];
 };
 
-// Tests if given element is inside (or simply is) the container
+// tests if given element is inside (or simply is) the container
 Dropzone.elementInside = function (element, container) {
   if (element === container) {
     return true;

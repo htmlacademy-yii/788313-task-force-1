@@ -2,10 +2,10 @@
 
 namespace TaskForce;
 
-use TaskForce\Action\RespondAction;
-use TaskForce\Action\UndoAction;
-use TaskForce\Action\RefuseAction;
-use TaskForce\Action\DoneAction;
+use TaskForce\action\RespondAction;
+use TaskForce\action\UndoAction;
+use TaskForce\action\RefuseAction;
+use TaskForce\action\DoneAction;
 
 class Task
 {
@@ -20,14 +20,14 @@ class Task
     private const ACTION_REFUSE  = 'Refuse'; //Отказаться, статус Work, исполнитель = текущий пользователь, меняется сатус на Failed.
     private const ACTION_DONE    = 'Done'; //Выполнено, статус Work, заказчик = текущий пользователь, меняется статус на Ready.
 
-    private $_idPerformer; //Исполнитель, который откликнулся.
-    private $_clientId; //Заказчик, который опубликовал.
-    public $_activeStatus; //Текущий статус задания.
+    private int $_performerId; //Исполнитель, который откликнулся.
+    private int $_clientId; //Заказчик, который опубликовал.
+    public string $_activeStatus; //Текущий статус задания.
 
-    public function __construct(int $idPerformer, int $clientId, string $activeStatus)
+    public function __construct(int $performerId, int $clientId, string $activeStatus)
     {
         $this->_clientId     = $clientId;
-        $this->_idPerformer  = $idPerformer;
+        $this->_performerId  = $performerId;
         $this->_activeStatus = $activeStatus;
     }
 
@@ -68,20 +68,26 @@ class Task
     public function availableActions(int $currentClient)
     {
         $actions = $this->actions();
+
+        $actRespond = $actions[self::ACTION_RESPOND];
+        $actUndo = $actions[self::ACTION_UNDO];
+        $actRefuse = $actions[self::ACTION_REFUSE];
+        $actDone = $actions[self::ACTION_DONE];
+
         if ($this->_activeStatus === self::STATUS_NEW) {
-            if ($actions[self::ACTION_RESPOND]->Verification($this->_idPerformer, $this->_clientId, $currentClient)) {
-                return $actions[self::ACTION_RESPOND];
+            if ($actRespond->Verification($this->_performerId, $this->_clientId, $currentClient)) {
+                return $actRespond;
             }
-            if ($actions[self::ACTION_UNDO]->Verification($this->_idPerformer, $this->_clientId, $currentClient)) {
-                return $actions[self::ACTION_UNDO];
+            if ($actUndo->Verification($this->_performerId, $this->_clientId, $currentClient)) {
+                return $actUndo;
             }
         }
         if ($this->_activeStatus === self::STATUS_WORK) {
-            if ($actions[self::ACTION_REFUSE]->Verification($this->_idPerformer, $this->_clientId, $currentClient)) {
-                return $actions[self::ACTION_REFUSE];
+            if ($actRefuse->Verification($this->_performerId, $this->_clientId, $currentClient)) {
+                return $actRefuse;
             }
-            if ($actions[self::ACTION_DONE]->Verification($this->_idPerformer, $this->_clientId, $currentClient)) {
-                return $actions[self::ACTION_DONE];
+            if ($actDone->Verification($this->_performerId, $this->_clientId, $currentClient)) {
+                return $actDone;
             }
         }
         return null;

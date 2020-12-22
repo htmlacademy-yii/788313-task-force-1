@@ -1,7 +1,7 @@
 <?php
 
 
-namespace TaskForce\Action;
+namespace TaskForce\action;
 
 
 class RefuseAction extends Action
@@ -16,8 +16,8 @@ class RefuseAction extends Action
         return 'Refuse';
     }
 
-    public function Verification(int $idPerformer, int $clientId, int $idCurrentClient): bool
+    public function Verification(int $performerId, int $clientId, int $currentClientId): bool
     {
-        return $idPerformer === $idCurrentClient;
+        return $performerId === $currentClientId;
     }
 }
