@@ -1,6 +1,12 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use TaskForce\Task;
+use TaskForce\Action\RespondAction;
+use TaskForce\Action\UndoAction;
+use TaskForce\Action\RefuseAction;
+use TaskForce\Action\DoneAction;
+
 
 class taskTest extends TestCase
 {
@@ -8,7 +14,7 @@ class taskTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->task = new \TaskForce\Task(1, 1, 2);
+        $this->task = new Task(1, 1, 2);
     }
 
     protected function tearDown(): void
@@ -54,10 +60,10 @@ class taskTest extends TestCase
 
     public function AvailableActionsProvider(): array
     {
-        $Respond = new TaskForce\Action\RespondAction();
-        $Undo = new TaskForce\Action\UndoAction();
-        $Refuse = new TaskForce\Action\RefuseAction();
-        $Done = new TaskForce\Action\DoneAction();
+        $Respond = new RespondAction();
+        $Undo = new UndoAction();
+        $Refuse = new RefuseAction();
+        $Done = new DoneAction();
 
         return [
             'Respond (Откликнуться)'  => [1, 2, 'New', 3, $Respond],
