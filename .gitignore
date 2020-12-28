@@ -10,3 +10,4 @@ vendor
 *.cache
 *.drawio
 result
+report
