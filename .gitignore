@@ -7,3 +7,8 @@
 *.sublime*
 Thumbs.db
 vendor
+*.cache
+*.drawio
+result
+report
+-report
