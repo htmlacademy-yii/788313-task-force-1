@@ -7,7 +7,7 @@ use TaskForce\action\UndoAction;
 use TaskForce\action\RefuseAction;
 use TaskForce\action\DoneAction;
 use TaskForce\Exception\RoleException;
-use TaskForce\Exception\StatusException;
+use TaskForce\Exception\TaskException;
 
 class Task
 {
@@ -39,12 +39,13 @@ class Task
             self::STATUS_FAILED
         ];
         try {
-        if (!in_array($activeStatus, $array)) {
-            throw new StatusException("Такого статуса несуществует");
+            if (!in_array($activeStatus, $array)) {
+                throw new TaskException("Такого статуса несуществует");
+            }
         }
-        }
-        catch (StatusException $e) {
+        catch (TaskException $e) {
             echo "Неверный статус: " . $e->getMessage();
+            exit();
         }
         $this->_activeStatus = $activeStatus;
     }
@@ -87,11 +88,12 @@ class Task
     {
         try {
             if ($currentClient !== 0 || $currentClient !== 1) {
-                throw new RoleException("Роль пользователя не определена");
+                throw new TaskException("Роль пользователя не определена");
             }
         }
-        catch (RoleException $e) {
+        catch (TaskException $e) {
             echo "Ошибка роли: " . $e->getMessage();
+            exit();
         }
         $actions = $this->actions();
 

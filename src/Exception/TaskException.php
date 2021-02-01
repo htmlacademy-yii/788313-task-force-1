@@ -4,7 +4,7 @@
 namespace TaskForce\Exception;
 
 
-class StatusException extends \Exception
+class TaskException extends \Exception
 {
 
 }
