@@ -6,6 +6,7 @@ use TaskForce\action\RespondAction;
 use TaskForce\action\UndoAction;
 use TaskForce\action\RefuseAction;
 use TaskForce\action\DoneAction;
+use TaskForce\Exception\TaskException;
 
 class Task
 {
@@ -26,8 +27,19 @@ class Task
 
     public function __construct(int $performerId, int $clientId, string $activeStatus)
     {
-        $this->_clientId     = $clientId;
-        $this->_performerId  = $performerId;
+        $this->_clientId = $clientId;
+        $this->_performerId = $performerId;
+
+        $array = [
+            self::STATUS_NEW,
+            self::STATUS_CANCEL,
+            self::STATUS_WORK,
+            self::STATUS_READY,
+            self::STATUS_FAILED
+        ];
+        if (!in_array($activeStatus, $array)) {
+            throw new TaskException("Такого статуса несуществует");
+        }
         $this->_activeStatus = $activeStatus;
     }
 
@@ -67,6 +79,9 @@ class Task
      */
     public function availableActions(int $currentClient)
     {
+        if ($currentClient !== 0 || $currentClient !== 1) {
+            throw new TaskException("Роль пользователя не определена");
+        }
         $actions = $this->actions();
 
         $actRespond = $actions[self::ACTION_RESPOND];

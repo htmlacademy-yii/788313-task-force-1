@@ -12,3 +12,4 @@ vendor
 result
 report
 -report
+.phpunit.result.cache
