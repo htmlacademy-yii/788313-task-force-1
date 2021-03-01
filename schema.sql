@@ -4,9 +4,22 @@ CREATE DATABASE taskforce
 
 USE taskforce;
 
+CREATE TABLE cities (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    lat FLOAT NOT NULL,
+    lng FLOAT NOT NULL
+);
+
+CREATE TABLE categories (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    code VARCHAR(10) NOT NULL UNIQUE
+);
+
 CREATE TABLE users (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    category_id VARCHAR(25) NOT NULL,
+    category_id INT NOT NULL,
     date_reg DATETIME NOT NULL,
     name VARCHAR(50) NOT NULL,
     status INT NOT NULL,
@@ -25,22 +38,12 @@ CREATE TABLE users (
     FOREIGN KEY (city_id) REFERENCES cities(id),
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
+
 /*
 status
 0-заказчик
 1-исполнитель
 */
-
-CREATE TABLE categories (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    code VARCHAR(10) NOT NULL UNIQUE
-);
-
-CREATE TABLE cities (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
-);
 
 CREATE TABLE tasks (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -54,7 +57,8 @@ CREATE TABLE tasks (
     idPerformer INT NOT NULL,
     category_id INT NOT NULL,
     city_id INT NOT NULL,
-    location VARCHAR(100),
+    lat FLOAT NOT NULL,
+    lng FLOAT NOT NULL,
     status_id VARCHAR(20) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (city_id) REFERENCES cities(id),
@@ -70,15 +74,13 @@ Ready,
 Failed
 */
 
---Заполнение с помощью json
+/*Заполнение с помощью json*/
 CREATE TABLE settings (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     users_id INT NOT NULL,
     setting TEXT NOT NULL,
     FOREIGN KEY (users_id) REFERENCES users(id)
 );
-
-
 
 CREATE TABLE files (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -96,6 +98,7 @@ CREATE TABLE reviews (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     task_id INT NOT NULL,
+    date_add DATETIME NOT NULL,
     rating INT NOT NULL,
     review TEXT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
