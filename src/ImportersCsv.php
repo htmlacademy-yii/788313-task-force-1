@@ -3,13 +3,12 @@
 
 namespace TaskForce;
 
-
 use TaskForce\Exception\TaskException;
 use TaskForce\Importer;
 
-class ImpotrersCSV
+class ImportersCsv
 {
-    public array $interpritator = [
+    public array $accord = [
         'cities.csv'     => [
                     'table'  => 'cities',
                     'header' => [
@@ -76,17 +75,16 @@ class ImpotrersCSV
         ]
     ];
 
-    public function interpritator():void
+    public function interpreter():void
     {
-        foreach ($this->interpritator as $files => $table) {
-            $filename = '/data/' . $files;
-            try {
+        foreach ($this->accord as $files => $table) {
+            $filename = 'data/' . $files;
                 $import = new Importer($filename, $table['table'], $table['header']);
+            try {
+                $import->import();
+            } catch (TaskException $e) {
+                error_log("Ошибка: ". $e->getMessage());
             }
-            catch (TaskException $e) {
-                error_log("Не найден файл: ". $e->getMessage());
-            }
-
         }
     }
 

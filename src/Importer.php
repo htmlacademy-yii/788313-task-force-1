@@ -22,53 +22,18 @@ class Importer
         $this->_tableName = $tableName;
     }
 
-    public function import():array
+    public function import():void
     {
         if (!file_exists($this->_fileName)) {
             throw new TaskException("Файл не существует.");
         }
-        if ($this->validateColumns($this->_columns)) {
+        if (!$this->validateColumns($this->_columns)) {
             throw new TaskException("Неверные заголовки столбцов");
         }
-        try {
-            $this->_fileObject = new SplFileObject($this->_fileName. ".sql", "a+");
-        }
-        catch (TaskException $e) {
-            error_log("Не удалось открыть файл ". $e->getMessage());
-        }
+        $this->_fileObject = new SplFileObject($this->_fileName. ".sql", "a+");
         foreach ($this->getNextLine() as $line) {
             $this->result[] = $line;
         }
-        return $this->result;
-    }
-
-    private function validateColumns(array $columns):bool
-    {
-        if (count($columns)) {
-            foreach ($columns as $column) {
-                if (is_string($column)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public function getHeaderData():array
-    {
-        $this->_fileObject->rewind();
-        return $this->_fileObject->fgetcsv();
-    }
-
-    public function getNextLine():iterable
-    {
-        while (!$this->_fileObject->eof()) {
-            yield $this->_fileObject->fgetcsv();
-        }
-    }
-
-    public function createQuerry():void
-    {
         $column = $this->_columns;
         $header = $this->getHeaderData();
         if (!in_array($header, $column, true)) {
@@ -87,4 +52,32 @@ class Importer
         $this->_fileObject->fseek(1,SEEK_END);
         $this->_fileObject->fwrite(";");
     }
+
+    private function validateColumns(array $columns):bool
+    {
+        if (count($columns)) {
+            foreach ($columns as $column) {
+                if (!is_string($column)) {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    public function getHeaderData():?array
+    {
+        $this->_fileObject->rewind();
+        return $this->_fileObject->fgetcsv();
+    }
+
+    public function getNextLine():iterable
+    {
+        while (!$this->_fileObject->eof()) {
+            yield $this->_fileObject->fgetcsv();
+        }
+    }
+
 }

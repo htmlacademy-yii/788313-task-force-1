@@ -2,7 +2,6 @@
 
 namespace TaskForce;
 
-use JetBrains\PhpStorm\ArrayShape;
 use TaskForce\action\RespondAction;
 use TaskForce\action\UndoAction;
 use TaskForce\action\RefuseAction;
@@ -22,8 +21,8 @@ class Task
     private const ACTION_REFUSE  = 'Refuse'; //Отказаться, статус Work, исполнитель = текущий пользователь, меняется сатус на Failed.
     private const ACTION_DONE    = 'Done'; //Выполнено, статус Work, заказчик = текущий пользователь, меняется статус на Ready.
 
-    private int $_performerId; //Исполнитель, который откликнулся.
-    private int $_clientId; //Заказчик, который опубликовал.
+    private int   $_performerId; //Исполнитель, который откликнулся.
+    private int   $_clientId; //Заказчик, который опубликовал.
     public string $_activeStatus; //Текущий статус задания.
 
     public function __construct(int $performerId, int $clientId, string $activeStatus)
@@ -48,13 +47,6 @@ class Task
      * Метод возвращает карту статусов на русском.
      * @return string[]
      */
-    #[ArrayShape([
-        self::STATUS_NEW    => "string",
-        self::STATUS_CANCEL => "string",
-        self::STATUS_WORK   => "string",
-        self::STATUS_READY  => "string",
-        self::STATUS_FAILED => "string"
-    ])]
     public function statuses(): array
     {
         return [
@@ -71,12 +63,6 @@ class Task
      * @return array
      */
 
-    #[ArrayShape([
-        self::ACTION_RESPOND => RespondAction::class,
-        self::ACTION_UNDO => UndoAction::class,
-        self::ACTION_REFUSE => RefuseAction::class,
-        self::ACTION_DONE => DoneAction::class
-    ])]
     public function actions(): array
     {
         return [
@@ -93,7 +79,7 @@ class Task
      * @return mixed
      * @throws TaskException
      */
-    public function availableActions(int $currentClient): mixed
+    public function availableActions(int $currentClient): ?object
     {
         /*if ($currentClient !== 0 || $currentClient !== 1) {
             throw new TaskException("Роль пользователя не определена");
@@ -131,13 +117,22 @@ class Task
      */
     public function getNextStatus(string $action): ?string
     {
-        return match ($action) {
-            self::ACTION_RESPOND => self::STATUS_WORK,
-            self::ACTION_UNDO => self::STATUS_CANCEL,
-            self::ACTION_REFUSE => self::STATUS_FAILED,
-            self::ACTION_DONE => self::STATUS_READY,
-            default => null,
-        };
+        switch ($action) {
+            case self::ACTION_RESPOND:
+                return self::STATUS_WORK;
+                break;
+            case self::ACTION_UNDO:
+                return self::STATUS_CANCEL;
+                break;
+            case self::ACTION_REFUSE:
+                return self::STATUS_FAILED;
+                break;
+            case self::ACTION_DONE:
+                return self::STATUS_READY;
+                break;
+            default:
+                return null;
+        }
     }
 }
 

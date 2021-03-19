@@ -1,6 +1,5 @@
 <?php
 
-use JetBrains\PhpStorm\ArrayShape;
 use PHPUnit\Framework\TestCase;
 use TaskForce\Exception\TaskException;
 use TaskForce\Task;
@@ -39,12 +38,6 @@ class taskTest extends TestCase
         self::assertEquals($arr, $this->task->statuses());
     }
 
-    #[ArrayShape([
-        'Action respond (Откликнуться)' => "string[]",
-        'Action undo (Отменить)' => "string[]",
-        'Action refuse (Отказаться)' => "string[]",
-        'Action done (Выполнено)' => "string[]"
-    ])]
     public function getNextStatusProvider(): array
     {
         return [
@@ -66,12 +59,6 @@ class taskTest extends TestCase
         self::assertEquals($status, $this->task->getNextStatus($action));
     }
 
-    #[ArrayShape([
-        'Respond (Откликнуться)' => "array",
-        'Undo (Отменить)' => "array",
-        'Refuse (Отказаться)' => "array",
-        'Done (Выполнено)' => "array"
-    ])]
     public function AvailableActionsProvider(): array
     {
         $Respond = new RespondAction();
@@ -90,16 +77,16 @@ class taskTest extends TestCase
     /**
      * Тест метода для получения доступных действий для указанного статуса
      * @dataProvider AvailableActionsProvider
-     * @param $perfermerId //Исполнитель
+     * @param $performerId //Исполнитель
      * @param $clientId //Клиент
      * @param $status //Статус
      * @param $currentClient //Текущий клиент
      * @param $object //Объект действия
      * @throws TaskException
      */
-    public function testAvailableActions($perfermerId, $clientId, $status, $currentClient, $object): void
+    public function testAvailableActions($performerId, $clientId, $status, $currentClient, $object): void
     {
-        $this->task = new TaskForce\Task($perfermerId, $clientId, $status);
+        $this->task = new TaskForce\Task($performerId, $clientId, $status);
 
         self::assertEquals($this->task->availableActions($currentClient), $object);
     }

@@ -18,6 +18,6 @@
     }
   },
   "require-dev": {
-    "phpunit/phpunit": "^latest"
+    "phpunit/phpunit": "^9"
   }
 }
