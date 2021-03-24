@@ -10,9 +10,11 @@ use SplFileObject;
 class Importer
 {
     private string $_fileName;
-    private object $_fileObject;
     private array  $_columns;
     private string $_tableName;
+    private object $_readFileObject;
+    private object $_writeFileObject;
+    private array $_header;
     private array  $result = [];
 
     public function __construct(string $fileName, string $tableName, array $columns)
@@ -22,62 +24,50 @@ class Importer
         $this->_tableName = $tableName;
     }
 
-    public function import():void
+    public function readFile():array
     {
         if (!file_exists($this->_fileName)) {
-            throw new TaskException("Файл не существует.");
+            throw new TaskException("Файл не существует");
         }
-        if (!$this->validateColumns($this->_columns)) {
-            throw new TaskException("Неверные заголовки столбцов");
+        try {
+            $this->fileObject = new SplFileObject($this->_fileName);
         }
-        $this->_fileObject = new SplFileObject($this->_fileName. ".sql", "a+");
-        foreach ($this->getNextLine() as $line) {
-            $this->result[] = $line;
+        catch (TaskException $exception) {
+            throw new TaskException("Не удалось открыть файл на чтение");
         }
-        $column = $this->_columns;
-        $header = $this->getHeaderData();
-        if (!in_array($header, $column, true)) {
-            throw new TaskException("Файл не содержит необходимых столбцов");
+        $this->_readFileObject = new SplFileObject($this->_fileName);
+        $this->_readFileObject->setFlags(SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD);
+        $this->_readFileObject->rewind();
+        $this->_header = $this->_readFileObject->fgetcsv();
+        while (!$this->_readFileObject->eof()) {
+            $this->result[] = str_replace("\r\n\r\n", " ", $this->_readFileObject->fgetcsv());
         }
-        $randCount = count($column) - count($header);
-        $stringHead = implode(", ",$column);
-
-        $this->_fileObject->fwrite("INSERT INTO $this->_tableName ($stringHead) VALUES ");
-        foreach ($this->result as $row) {
-            $this->_fileObject->fwrite("($row");
-            for ($i = 1; $i < $randCount; $i++) {
-                $this->_fileObject->fwrite(", " . rand(1,6));
-            }
-        }
-        $this->_fileObject->fseek(1,SEEK_END);
-        $this->_fileObject->fwrite(";");
+        return array_filter($this->result);
     }
 
-    private function validateColumns(array $columns):bool
+    public function import():void
     {
-        if (count($columns)) {
-            foreach ($columns as $column) {
-                if (!is_string($column)) {
-                    return false;
+        $this->result = $this->readFile();
+        $this->_writeFileObject = new SplFileObject($this->_fileName. ".sql", "a+");
+        $randCount = count($this->_columns) - count($this->_header);
+        $stringColumn = implode(", ",$this->_columns);
+
+        $this->_writeFileObject->fwrite("INSERT INTO $this->_tableName ($stringColumn) VALUES \r\n");
+        foreach ($this->result as $key=>$row) {
+            $stringRow = "('" . implode("', '",$row)."'";
+            if ($randCount) {
+                for ($i = 0; $i < $randCount; $i++) {
+                    $rand = rand(1,6);
+                    $stringRow .= ", '$rand'";
                 }
+                $stringRow .= "),\r\n";
+            } else {
+                $stringRow .= "),\r\n";
             }
-        } else {
-            return false;
-        }
-        return true;
-    }
-
-    public function getHeaderData():?array
-    {
-        $this->_fileObject->rewind();
-        return $this->_fileObject->fgetcsv();
-    }
-
-    public function getNextLine():iterable
-    {
-        while (!$this->_fileObject->eof()) {
-            yield $this->_fileObject->fgetcsv();
+            if ($key === array_key_last($this->result)) {
+                $stringRow .= substr_replace($stringRow,";",-3);
+            }
+            $this->_writeFileObject->fwrite($stringRow);
         }
     }
-
 }
