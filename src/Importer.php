@@ -51,8 +51,8 @@ class Importer
         $this->_writeFileObject = new SplFileObject($this->_fileName. ".sql", "a+");
         $randCount = count($this->_columns) - count($this->_header);
         $stringColumn = implode(", ",$this->_columns);
-
-        $this->_writeFileObject->fwrite("INSERT INTO $this->_tableName ($stringColumn) VALUES \r\n");
+        $this->_writeFileObject->fwrite("USE taskforce;\r\n");
+        $this->_writeFileObject->fwrite("INSERT INTO $this->_tableName ($stringColumn) VALUES\r\n");
         foreach ($this->result as $key=>$row) {
             $stringRow = "('" . implode("', '",$row)."'";
             if ($randCount) {
@@ -65,7 +65,7 @@ class Importer
                 $stringRow .= "),\r\n";
             }
             if ($key === array_key_last($this->result)) {
-                $stringRow .= substr_replace($stringRow,";",-3);
+                $stringRow = substr_replace($stringRow,";",-3);
             }
             $this->_writeFileObject->fwrite($stringRow);
         }

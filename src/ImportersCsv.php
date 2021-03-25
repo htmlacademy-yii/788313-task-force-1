@@ -36,7 +36,7 @@ class ImportersCsv
                     'header' => [
                         'email',
                         'name',
-                        'password',
+                        'password_hash',
                         'date_reg',
                         'city_id',
                         'category_id']
