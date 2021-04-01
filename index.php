@@ -15,6 +15,7 @@ require_once 'vendor/autoload.php';
 
 $test = new ImportersCsv();
 
+$test->joinCSVUser();
 $test->interpreter();
 
 

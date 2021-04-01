@@ -5,43 +5,40 @@ namespace TaskForce;
 
 use TaskForce\Exception\TaskException;
 use TaskForce\Importer;
+use SplFileObject;
 
 class ImportersCsv
 {
-    public array $accord = [
-        'cities.csv'     => [
+    private array $accord = [
+        'cities.csv'      => [
                     'table'  => 'cities',
                     'header' => [
                         'name',
                         'lat',
                         'lng']
         ],
-        'categories.csv' => [
+        'categories.csv'  => [
                     'table'  => 'categories',
                     'header' => [
                         'name',
                         'code']
         ],
-        'profiles.csv'   => [
-                    'table'  => 'users',
-                    'header' => [
-                        'city_id',
-                        'birthday',
-                        'about',
-                        'phone',
-                        'skype']
-        ],
-        'users.csv'      => [
+        'users-profiles.csv'=> [
                     'table'  => 'users',
                     'header' => [
                         'email',
                         'name',
                         'password_hash',
                         'date_reg',
+                        'address',
+                        'birthday',
+                        'about',
+                        'phone',
+                        'skype',
                         'city_id',
                         'category_id']
         ],
-        'tasks.csv'      => [
+        'tasks.csv'       => [
                     'table'  => 'tasks',
                     'header' => [
                         'date_create',
@@ -49,22 +46,22 @@ class ImportersCsv
                         'description',
                         'date_end',
                         'title',
-                        'city_id',
+                        'address',
                         'price',
                         'lat',
                         'lng',
-                        'user_id',
-                        'city_id',
-                        'category_id']
+                        'user_id']
         ],
-        'opinions.csv'   => [
+        'opinions.csv'    => [
                     'table'  => 'reviews',
                     'header' => [
                         'date_add',
                         'rating',
-                        'review']
+                        'review',
+                        'user_id',
+                        'task_id']
         ],
-        'replies.csv'    => [
+        'replies.csv'     => [
                     'table'  => 'reviews',
                     'header' => [
                         'date_add',
@@ -74,7 +71,27 @@ class ImportersCsv
                         'task_id']
         ]
     ];
+    public array $userResult;
+    private array $profileResult;
+    private array $output;
 
+    public function joinCSVUser():void
+    {
+        $user     = new SplFileObject('data/users.csv');
+        $user->setFlags(SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD | SplFileObject::DROP_NEW_LINE);
+        $profile = new SplFileObject('data/profiles.csv');
+        while (!$user->eof()) {
+            $userResult[] = $user->fgets();
+        }
+        while (!$profile->eof()) {
+            $profilesResult[] = $profile->fgets();
+        }
+        $min = min(count($userResult), count($profilesResult));
+        $output = new SplFileObject('data/users-profiles.csv', "a+");
+        for ($i = 0; $i < $min-1; $i++) {
+            $output->fwrite($userResult[$i] . ', ' . $profilesResult[$i]);
+        }
+    }
     public function interpreter():void
     {
         foreach ($this->accord as $files => $table) {

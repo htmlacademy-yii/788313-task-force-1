@@ -29,6 +29,7 @@ CREATE TABLE users (
     telegram VARCHAR(40) NOT NULL,
     img VARCHAR(250) NOT NULL,
     birthday DATETIME NOT NULL,
+    address VARCHAR(100) NOT NULL,
     city_id INT NOT NULL,
     about VARCHAR(200) NOT NULL,
     rating INT NOT NULL,
@@ -56,12 +57,11 @@ CREATE TABLE tasks (
     user_id INT NOT NULL,
     idPerformer INT NOT NULL,
     category_id INT NOT NULL,
-    city_id INT NOT NULL,
+    address VARCHAR(100) NOT NULL,
     lat FLOAT NOT NULL,
     lng FLOAT NOT NULL,
     status_id VARCHAR(20) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (city_id) REFERENCES cities(id),
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 

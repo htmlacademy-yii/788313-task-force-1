@@ -30,14 +30,12 @@ class Importer
             throw new TaskException("Файл не существует");
         }
         try {
-            $this->fileObject = new SplFileObject($this->_fileName);
+            $this->_readFileObject = new SplFileObject($this->_fileName);
         }
         catch (TaskException $exception) {
             throw new TaskException("Не удалось открыть файл на чтение");
         }
-        $this->_readFileObject = new SplFileObject($this->_fileName);
         $this->_readFileObject->setFlags(SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD);
-        $this->_readFileObject->rewind();
         $this->_header = $this->_readFileObject->fgetcsv();
         while (!$this->_readFileObject->eof()) {
             $this->result[] = str_replace("\r\n\r\n", " ", $this->_readFileObject->fgetcsv());
@@ -54,6 +52,9 @@ class Importer
         $this->_writeFileObject->fwrite("USE taskforce;\r\n");
         $this->_writeFileObject->fwrite("INSERT INTO $this->_tableName ($stringColumn) VALUES\r\n");
         foreach ($this->result as $key=>$row) {
+            if (count($row) !== count($this->_header)) {
+                continue;
+            }
             $stringRow = "('" . implode("', '",$row)."'";
             if ($randCount) {
                 for ($i = 0; $i < $randCount; $i++) {

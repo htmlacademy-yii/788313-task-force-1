@@ -1,5 +1,6 @@
 USE taskforce;
 INSERT INTO categories (name, code) VALUES
+('Переводы', 'translation'),
 ('Уборка', 'clean'),
 ('Переезды', 'cargo'),
 ('Компьютерная помощь', 'neo'),
