@@ -11,5 +11,6 @@ vendor
 *.drawio
 result
 report
+_report
 -report
 .phpunit.result.cache

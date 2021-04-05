@@ -10,6 +10,7 @@
     }
   ],
   "require": {
+    "ext-mysqli": "*"
   },
   "autoload": {
     "psr-4": {

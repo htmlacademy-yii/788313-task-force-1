@@ -21,8 +21,8 @@ class Task
     private const ACTION_REFUSE  = 'Refuse'; //Отказаться, статус Work, исполнитель = текущий пользователь, меняется сатус на Failed.
     private const ACTION_DONE    = 'Done'; //Выполнено, статус Work, заказчик = текущий пользователь, меняется статус на Ready.
 
-    private int $_performerId; //Исполнитель, который откликнулся.
-    private int $_clientId; //Заказчик, который опубликовал.
+    private int   $_performerId; //Исполнитель, который откликнулся.
+    private int   $_clientId; //Заказчик, который опубликовал.
     public string $_activeStatus; //Текущий статус задания.
 
     public function __construct(int $performerId, int $clientId, string $activeStatus)
@@ -37,9 +37,9 @@ class Task
             self::STATUS_READY,
             self::STATUS_FAILED
         ];
-        if (!in_array($activeStatus, $array)) {
+        /*if (!in_array($activeStatus, $array)) {
             throw new TaskException("Такого статуса несуществует");
-        }
+        }*/
         $this->_activeStatus = $activeStatus;
     }
 
@@ -62,6 +62,7 @@ class Task
      * Метод возвращает карту действий.
      * @return array
      */
+
     public function actions(): array
     {
         return [
@@ -75,13 +76,14 @@ class Task
     /**
      * Метод для получения доступных действий для указанного статуса
      * @param int $currentClient
-     * @return mixed|null
+     * @return mixed
+     * @throws TaskException
      */
-    public function availableActions(int $currentClient)
+    public function availableActions(int $currentClient): ?object
     {
-        if ($currentClient !== 0 || $currentClient !== 1) {
+        /*if ($currentClient !== 0 || $currentClient !== 1) {
             throw new TaskException("Роль пользователя не определена");
-        }
+        }*/
         $actions = $this->actions();
 
         $actRespond = $actions[self::ACTION_RESPOND];

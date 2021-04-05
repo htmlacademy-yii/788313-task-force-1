@@ -1,6 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use TaskForce\Exception\TaskException;
 use TaskForce\Task;
 use TaskForce\Action\RespondAction;
 use TaskForce\Action\UndoAction;
@@ -14,7 +15,7 @@ class taskTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->task = new Task(1, 1, 2);
+            $this->task = new Task(1, 1, 2);
     }
 
     protected function tearDown(): void
@@ -76,15 +77,16 @@ class taskTest extends TestCase
     /**
      * Тест метода для получения доступных действий для указанного статуса
      * @dataProvider AvailableActionsProvider
-     * @param $perfermerId //Исполнитель
+     * @param $performerId //Исполнитель
      * @param $clientId //Клиент
      * @param $status //Статус
      * @param $currentClient //Текущий клиент
      * @param $object //Объект действия
+     * @throws TaskException
      */
-    public function testAvailableActions($perfermerId, $clientId, $status, $currentClient, $object): void
+    public function testAvailableActions($performerId, $clientId, $status, $currentClient, $object): void
     {
-        $this->task = new TaskForce\Task($perfermerId, $clientId, $status);
+        $this->task = new TaskForce\Task($performerId, $clientId, $status);
 
         self::assertEquals($this->task->availableActions($currentClient), $object);
     }
