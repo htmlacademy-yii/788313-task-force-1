@@ -12,10 +12,10 @@ use TaskForce\action\RefuseAction;
 use TaskForce\action\DoneAction;
 
 require_once 'vendor/autoload.php';
-
+/*
 $test = new ImportersCsv();
 
 $test->joinCSVUser();
 $test->interpreter();
-
+*/
 
