@@ -551,7 +551,7 @@ var Dropzone = function (_Emitter) {
         fallback: function fallback() {
           // This code should pass in IE7... :(
           var messageElement = void 0;
-          this.element.className = this.element.className + " dz-browser-not-supported";
+          this.element.class = this.element.class + " dz-browser-not-supported";
 
           for (var _iterator2 = this.element.getElementsByTagName("div"), _isArray2 = true, _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
             var _ref2;
@@ -567,9 +567,9 @@ var Dropzone = function (_Emitter) {
 
             var child = _ref2;
 
-            if (/(^| )dz-message($| )/.test(child.className)) {
+            if (/(^| )dz-message($| )/.test(child.class)) {
               messageElement = child;
-              child.className = "dz-message"; // Removes the 'dz-default' class
+              child.class = "dz-message"; // Removes the 'dz-default' class
               break;
             }
           }
@@ -1207,7 +1207,7 @@ var Dropzone = function (_Emitter) {
           if (_this3.options.maxFiles === null || _this3.options.maxFiles > 1) {
             _this3.hiddenFileInput.setAttribute("multiple", "multiple");
           }
-          _this3.hiddenFileInput.className = "dz-hidden-input";
+          _this3.hiddenFileInput.class = "dz-hidden-input";
 
           if (_this3.options.acceptedFiles !== null) {
             _this3.hiddenFileInput.setAttribute("accept", _this3.options.acceptedFiles);
@@ -1495,7 +1495,7 @@ var Dropzone = function (_Emitter) {
 
           var el = _ref12;
 
-          if (/(^| )fallback($| )/.test(el.className)) {
+          if (/(^| )fallback($| )/.test(el.class)) {
             return el;
           }
         }
@@ -2934,7 +2934,7 @@ Dropzone.discover = function () {
 
           var el = _ref32;
 
-          if (/(^| )dropzone($| )/.test(el.className)) {
+          if (/(^| )dropzone($| )/.test(el.class)) {
             result.push(dropzones.push(el));
           } else {
             result.push(undefined);

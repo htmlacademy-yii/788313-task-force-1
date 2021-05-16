@@ -14,11 +14,11 @@ AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="<?php echo Yii::$app->language ?>">
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
+    <meta charset="<?php echo Yii::$app->charset ?>">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?php echo Html::encode($this->title) ?></title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -125,7 +125,7 @@ AppAsset::register($this);
 
     <main class="page-main">
         <div class="main-container">
-        <?= $content ?>
+        <?php echo $content ?>
         </div>
     </main>
 
@@ -133,7 +133,7 @@ AppAsset::register($this);
         <div class="main-container page-footer__container">
             <div class="page-footer__info">
                 <p class="page-footer__info-copyright">
-                    © <?= date('Y') ?>, <?= Html::encode(Yii::$app->name) ?>
+                    © <?php echo date('Y') ?>, <?php echo Html::encode(Yii::$app->name) ?>
                     Все права защищены
                 </p>
                 <p class="page-footer__info-use">
