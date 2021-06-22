@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -56,16 +56,18 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getTasks():object
     {
-        return $this->hasMany(Task::class(), ['category_id' => 'id']);
+        return $this->hasMany(Task::class, ['category_id' => 'id']);
     }
 
     /**
-     * Gets query for [[Users]].
+     * Gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public function getUsers():object
     {
-        return $this->hasMany(User::class(), ['category_id' => 'id']);
+        return $this->hasMany(User::class, ['id' => 'user_id'])
+            ->viaTable('user_category', ['category_id' => 'id']);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -32,7 +32,7 @@ class Setting extends \yii\db\ActiveRecord
             [['users_id', 'setting'], 'required'],
             [['users_id'], 'integer'],
             [['setting'], 'string'],
-            [['users_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class(), 'targetAttribute' => ['users_id' => 'id']],
+            [['users_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['users_id' => 'id']],
         ];
     }
 
@@ -55,6 +55,6 @@ class Setting extends \yii\db\ActiveRecord
      */
     public function getUsers():object
     {
-        return $this->hasOne(User::class(), ['id' => 'users_id']);
+        return $this->hasOne(User::class, ['id' => 'users_id']);
     }
 }

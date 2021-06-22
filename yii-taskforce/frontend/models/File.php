@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -37,7 +37,7 @@ class File extends \yii\db\ActiveRecord
             [['users_id'], 'required'],
             [['users_id'], 'integer'],
             [['file_1', 'file_2', 'file_3', 'file_4', 'file_5', 'file_6'], 'string', 'max' => 250],
-            [['users_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class(), 'targetAttribute' => ['users_id' => 'id']],
+            [['users_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['users_id' => 'id']],
         ];
     }
 
@@ -65,6 +65,6 @@ class File extends \yii\db\ActiveRecord
      */
     public function getUsers():object
     {
-        return $this->hasOne(User::class(), ['id' => 'users_id']);
+        return $this->hasOne(User::class, ['id' => 'users_id']);
     }
 }

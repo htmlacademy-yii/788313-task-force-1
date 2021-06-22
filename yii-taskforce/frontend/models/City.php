@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -56,6 +56,6 @@ class City extends \yii\db\ActiveRecord
      */
     public function getUsers():object
     {
-        return $this->hasMany(User::class(), ['city_id' => 'id']);
+        return $this->hasMany(User::class, ['city_id' => 'id']);
     }
 }

@@ -437,9 +437,9 @@ var Dropzone = function (_Emitter) {
 
         /**
          * If the filesize is too big.
-         * `` and `` will be replaced with the respective configuration values.
+         * `{{filesize}}` and `{{maxFilesize}}` will be replaced with the respective configuration values.
          */
-        dictFileTooBig: "File is too big (MiB). Max filesize: MiB.",
+        dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
 
         /**
          * If the file doesn't match the file type.
@@ -448,9 +448,9 @@ var Dropzone = function (_Emitter) {
 
         /**
          * If the server response was invalid.
-         * `` will be replaced with the servers status code.
+         * `{{statusCode}}` will be replaced with the servers status code.
          */
-        dictResponseError: "Server responded with  code.",
+        dictResponseError: "Server responded with {{statusCode}} code.",
 
         /**
          * If `addRemoveLinks` is true, the text to be used for the cancel upload link.
@@ -479,7 +479,7 @@ var Dropzone = function (_Emitter) {
 
         /**
          * Displayed if `maxFiles` is st and exceeded.
-         * The string `` will be replaced by the configuration value.
+         * The string `{{maxFiles}}` will be replaced by the configuration value.
          */
         dictMaxFilesExceeded: "You can not upload any more files.",
 
@@ -551,7 +551,7 @@ var Dropzone = function (_Emitter) {
         fallback: function fallback() {
           // This code should pass in IE7... :(
           var messageElement = void 0;
-          this.element.class = this.element.class + " dz-browser-not-supported";
+          this.element.className = this.element.className + " dz-browser-not-supported";
 
           for (var _iterator2 = this.element.getElementsByTagName("div"), _isArray2 = true, _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
             var _ref2;
@@ -567,9 +567,9 @@ var Dropzone = function (_Emitter) {
 
             var child = _ref2;
 
-            if (/(^| )dz-message($| )/.test(child.class)) {
+            if (/(^| )dz-message($| )/.test(child.className)) {
               messageElement = child;
-              child.class = "dz-message"; // Removes the 'dz-default' class
+              child.className = "dz-message"; // Removes the 'dz-default' class
               break;
             }
           }
@@ -1207,7 +1207,7 @@ var Dropzone = function (_Emitter) {
           if (_this3.options.maxFiles === null || _this3.options.maxFiles > 1) {
             _this3.hiddenFileInput.setAttribute("multiple", "multiple");
           }
-          _this3.hiddenFileInput.class = "dz-hidden-input";
+          _this3.hiddenFileInput.className = "dz-hidden-input";
 
           if (_this3.options.acceptedFiles !== null) {
             _this3.hiddenFileInput.setAttribute("accept", _this3.options.acceptedFiles);
@@ -1495,7 +1495,7 @@ var Dropzone = function (_Emitter) {
 
           var el = _ref12;
 
-          if (/(^| )fallback($| )/.test(el.class)) {
+          if (/(^| )fallback($| )/.test(el.className)) {
             return el;
           }
         }
@@ -1797,11 +1797,11 @@ var Dropzone = function (_Emitter) {
     key: "accept",
     value: function accept(file, done) {
       if (this.options.maxFilesize && file.size > this.options.maxFilesize * 1024 * 1024) {
-        return done(this.options.dictFileTooBig.replace("", Math.round(file.size / 1024 / 10.24) / 100).replace("", this.options.maxFilesize));
+        return done(this.options.dictFileTooBig.replace("{{filesize}}", Math.round(file.size / 1024 / 10.24) / 100).replace("{{maxFilesize}}", this.options.maxFilesize));
       } else if (!Dropzone.isValidFile(file, this.options.acceptedFiles)) {
         return done(this.options.dictInvalidFileType);
       } else if (this.options.maxFiles != null && this.getAcceptedFiles().length >= this.options.maxFiles) {
-        done(this.options.dictMaxFilesExceeded.replace("", this.options.maxFiles));
+        done(this.options.dictMaxFilesExceeded.replace("{{maxFiles}}", this.options.maxFiles));
         return this.emit("maxfilesexceeded", file);
       } else {
         return this.options.accept.call(this, file, done);
@@ -2772,7 +2772,7 @@ var Dropzone = function (_Emitter) {
 
         var file = _ref29;
 
-        this._errorProcessing(files, response || this.options.dictResponseError.replace("", xhr.status), xhr);
+        this._errorProcessing(files, response || this.options.dictResponseError.replace("{{statusCode}}", xhr.status), xhr);
       }
     }
   }, {
@@ -2934,7 +2934,7 @@ Dropzone.discover = function () {
 
           var el = _ref32;
 
-          if (/(^| )dropzone($| )/.test(el.class)) {
+          if (/(^| )dropzone($| )/.test(el.className)) {
             result.push(dropzones.push(el));
           } else {
             result.push(undefined);
@@ -3067,7 +3067,7 @@ Dropzone.createElement = function (string) {
   return div.childNodes[0];
 };
 
-// tests if given element is inside (or simply is) the container
+// Tests if given element is inside (or simply is) the container
 Dropzone.elementInside = function (element, container) {
   if (element === container) {
     return true;

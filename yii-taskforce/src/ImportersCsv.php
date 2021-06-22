@@ -35,8 +35,7 @@ class ImportersCsv
                         'about',
                         'phone',
                         'skype',
-                        'city_id',
-                        'category_id']
+                        'city_id']
         ],
         'tasks.csv'       => [
                     'table'  => 'tasks',

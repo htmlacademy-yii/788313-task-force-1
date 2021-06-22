@@ -9,6 +9,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use yii\widgets\Menu;
 
 AppAsset::register($this);
 ?>
@@ -57,20 +58,22 @@ AppAsset::register($this);
                 </a>
             </div>
             <div class="header__nav">
-                <ul class="header-nav__list site-list">
-                    <li class="site-list__item">
-                        <a href="#">Задания</a>
-                    </li>
-                    <li class="site-list__item">
-                        <a href="#">Исполнители</a>
-                    </li>
-                    <li class="site-list__item">
-                        <a href="#">Создать задание</a>
-                    </li>
-                    <li class="site-list__item">
-                        <a>Мой профиль</a>
-                    </li>
-                </ul>
+                <?php
+                echo Menu::widget([
+                    'items' => [
+                        ['label' => 'Задания', 'url' => ['#']],
+                        ['label' => 'Исполнители', 'url' => ['#']],
+                        ['label' => 'Создать задание', 'url' => ['#']],
+                        ['label' => 'Мой профиль', 'url' => ['#']],
+                    ],
+                    'options' => [
+                        'class' => 'header-nav__list site-list',
+                    ],
+                    'activeCssClass'=>'site-list__item--active',
+                    'encodeLabels' =>'false',
+                    'itemOptions'=>['class'=>'site-list__item',]
+                                      ]);
+                ?>
             </div>
             <div class="header__town">
                 <select class="multiple-select input town-select" size="1" name="town[]">

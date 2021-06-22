@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -8,7 +8,6 @@ use Yii;
  * This is the model class for table "user".
  *
  * @property int $id
- * @property int $category_id
  * @property string $date_reg
  * @property string $name
  * @property int $status
@@ -31,7 +30,7 @@ use Yii;
  * @property Setting[] $settings
  * @property Task[] $tasks
  * @property City $city
- * @property Category $category
+ * @property Category[] $Categories
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -49,9 +48,9 @@ class User extends \yii\db\ActiveRecord
     public function rules():array
     {
         return [
-            [['category_id', 'date_reg', 'name', 'status', 'email', 'phone', 'skype', 'telegram', 'img', 'birthday', 'address', 'city_id', 'about', 'rating', 'failed_task', 'complete_task', 'password_hash'], 'required'],
-            [['category_id', 'status', 'city_id', 'rating', 'failed_task', 'complete_task'], 'integer'],
+            [['date_reg', 'name', 'status', 'email', 'phone', 'skype', 'telegram', 'img', 'birthday', 'address', 'city_id', 'about', 'rating', 'failed_task', 'complete_task', 'password_hash'], 'required'],
             [['date_reg', 'birthday'], 'safe'],
+            [['status', 'city_id', 'rating', 'failed_task', 'complete_task'], 'integer'],
             [['name', 'email'], 'string', 'max' => 50],
             [['phone'], 'string', 'max' => 11],
             [['skype', 'telegram'], 'string', 'max' => 40],
@@ -59,8 +58,7 @@ class User extends \yii\db\ActiveRecord
             [['address'], 'string', 'max' => 100],
             [['about'], 'string', 'max' => 200],
             [['email'], 'unique'],
-            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::class(), 'targetAttribute' => ['city_id' => 'id']],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class(), 'targetAttribute' => ['category_id' => 'id']],
+            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::class, 'targetAttribute' => ['city_id' => 'id']],
         ];
     }
 
@@ -71,7 +69,6 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'category_id' => 'Category ID',
             'date_reg' => 'Date Reg',
             'name' => 'Name',
             'status' => 'Status',
@@ -98,7 +95,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getFiles():object
     {
-        return $this->hasMany(File::class(), ['users_id' => 'id']);
+        return $this->hasMany(File::class, ['users_id' => 'id']);
     }
 
     /**
@@ -108,7 +105,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getReviews():object
     {
-        return $this->hasMany(Review::class(), ['user_id' => 'id']);
+        return $this->hasMany(Review::class, ['user_id' => 'id']);
     }
 
     /**
@@ -118,7 +115,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getSettings():object
     {
-        return $this->hasMany(Setting::class(), ['users_id' => 'id']);
+        return $this->hasMany(Setting::class, ['users_id' => 'id']);
     }
 
     /**
@@ -128,7 +125,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getTasks():object
     {
-        return $this->hasMany(Task::class(), ['user_id' => 'id']);
+        return $this->hasMany(Task::class, ['user_id' => 'id']);
     }
 
     /**
@@ -138,16 +135,18 @@ class User extends \yii\db\ActiveRecord
      */
     public function getCity():object
     {
-        return $this->hasOne(City::class(), ['id' => 'city_id']);
+        return $this->hasOne(City::class, ['id' => 'city_id']);
     }
 
     /**
      * Gets query for [[Category]].
      *
      * @return \yii\db\ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
-    public function getCategory():object
+    public function getCategories():object
     {
-        return $this->hasOne(Category::class(), ['id' => 'category_id']);
+        return $this->hasMany(Category::class, ['id' => 'category_id'])
+            ->viaTable('user_category', ['user_id' => 'id']);
     }
 }

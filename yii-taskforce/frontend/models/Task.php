@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -51,8 +51,8 @@ class Task extends \yii\db\ActiveRecord
             [['img'], 'string', 'max' => 250],
             [['address'], 'string', 'max' => 100],
             [['status_id'], 'string', 'max' => 20],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class(), 'targetAttribute' => ['user_id' => 'id']],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class(), 'targetAttribute' => ['category_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
         ];
     }
 
@@ -86,7 +86,7 @@ class Task extends \yii\db\ActiveRecord
      */
     public function getReviews():object
     {
-        return $this->hasMany(Review::class(), ['task_id' => 'id']);
+        return $this->hasMany(Review::class, ['task_id' => 'id']);
     }
 
     /**
@@ -96,7 +96,7 @@ class Task extends \yii\db\ActiveRecord
      */
     public function getUser():object
     {
-        return $this->hasOne(User::class(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**
@@ -106,6 +106,6 @@ class Task extends \yii\db\ActiveRecord
      */
     public function getCategory():object
     {
-        return $this->hasOne(Category::class(), ['id' => 'category_id']);
+        return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 }

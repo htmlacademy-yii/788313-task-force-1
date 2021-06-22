@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 
@@ -37,8 +37,8 @@ class Review extends \yii\db\ActiveRecord
             [['user_id', 'task_id', 'rating'], 'integer'],
             [['date_add'], 'safe'],
             [['review'], 'string'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class(), 'targetAttribute' => ['user_id' => 'id']],
-            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::class(), 'targetAttribute' => ['task_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::class, 'targetAttribute' => ['task_id' => 'id']],
         ];
     }
 
@@ -64,7 +64,7 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getUser():object
     {
-        return $this->hasOne(User::class(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**
@@ -74,6 +74,6 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getTask():object
     {
-        return $this->hasOne(Task::class(), ['id' => 'task_id']);
+        return $this->hasOne(Task::class, ['id' => 'task_id']);
     }
 }
