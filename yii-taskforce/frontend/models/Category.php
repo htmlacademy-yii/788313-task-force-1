@@ -3,6 +3,8 @@
 namespace frontend\models;
 
 use Yii;
+use yii\base\InvalidConfigException;
+use \yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "category".
@@ -52,7 +54,7 @@ class Category extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Tasks]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getTasks():object
     {
@@ -62,8 +64,8 @@ class Category extends \yii\db\ActiveRecord
     /**
      * Gets query for [[User]].
      *
-     * @return \yii\db\ActiveQuery
-     * @throws \yii\base\InvalidConfigException
+     * @return ActiveQuery
+     * @throws InvalidConfigException
      */
     public function getUsers():object
     {

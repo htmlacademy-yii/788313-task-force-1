@@ -1,14 +1,12 @@
 <?php
 
 use yii\helpers\Html;
-use frontend\controllers\TimePass;
+use \yii\i18n\Formatter;
 
 /* @var $this yii\web\View */
 /* @var $tasks frontend\controllers\TasksController */
-/* @var $getTime frontend\controllers\TimePass */
 
 $this->title = 'Новые задания';
-$getTime = new TimePass();
 ?>
 
     <main class="page-main">
@@ -28,7 +26,7 @@ $getTime = new TimePass();
                         </p>
                         <b class="new-task__price new-task__price--translation"><?php echo $task['price']; ?><b> ₽</b></b>
                         <p class="new-task__place"><?php echo $task['address']; ?></p>
-                        <span class="new-task__time"><?php echo $getTime->time($task['date_create']); ?></span>
+                        <span class="new-task__time"><?php echo Yii::$app->formatter->asRelativeTime($task['date_create']); ?></span>
                     </div>
                     <?php endforeach ?>
                 </div>

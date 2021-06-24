@@ -3,6 +3,9 @@
 namespace frontend\models;
 
 use Yii;
+use \yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
+use \yii\base\InvalidConfigException;
 
 /**
  * This is the model class for table "user".
@@ -32,7 +35,7 @@ use Yii;
  * @property City $city
  * @property Category[] $Categories
  */
-class User extends \yii\db\ActiveRecord
+class User extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -91,7 +94,7 @@ class User extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Files]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getFiles():object
     {
@@ -101,7 +104,7 @@ class User extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Reviews]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getReviews():object
     {
@@ -111,7 +114,7 @@ class User extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Settings]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getSettings():object
     {
@@ -121,7 +124,7 @@ class User extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Tasks]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getTasks():object
     {
@@ -131,7 +134,7 @@ class User extends \yii\db\ActiveRecord
     /**
      * Gets query for [[City]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCity():object
     {
@@ -141,8 +144,8 @@ class User extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Category]].
      *
-     * @return \yii\db\ActiveQuery
-     * @throws \yii\base\InvalidConfigException
+     * @return ActiveQuery
+     * @throws InvalidConfigException
      */
     public function getCategories():object
     {

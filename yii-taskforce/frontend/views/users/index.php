@@ -8,11 +8,9 @@ use frontend\controllers\TimePass;
 /* @var $this yii\web\View */
 /* @var $users frontend\controllers\UsersController */
 /* @var $review frontend\controllers\TrueForm */
-/* @var $getTime frontend\controllers\TimePass */
 
 $this->title = 'Исполнители';
 $review = new TrueForm();
-$getTime = new TimePass();
 ?>
 
 <main class="page-main">
