@@ -1,8 +1,9 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "setting".
@@ -32,7 +33,7 @@ class Setting extends \yii\db\ActiveRecord
             [['users_id', 'setting'], 'required'],
             [['users_id'], 'integer'],
             [['setting'], 'string'],
-            [['users_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class(), 'targetAttribute' => ['users_id' => 'id']],
+            [['users_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['users_id' => 'id']],
         ];
     }
 
@@ -51,10 +52,10 @@ class Setting extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Users]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUsers():object
     {
-        return $this->hasOne(User::class(), ['id' => 'users_id']);
+        return $this->hasOne(User::class, ['id' => 'users_id']);
     }
 }

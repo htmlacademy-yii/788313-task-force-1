@@ -17,9 +17,17 @@ CREATE TABLE category (
     code VARCHAR(10) NOT NULL UNIQUE
 );
 
-CREATE TABLE user (
+CREATE TABLE user_category (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     category_id INT NOT NULL,
+	user_id INT NOT NULL,
+	FOREIGN KEY (category_id) REFERENCES category(id),
+	FOREIGN KEY (user_id) REFERENCES user(id)
+);
+
+CREATE TABLE user (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_category_id INT NOT NULL,
     date_reg DATETIME NOT NULL,
     name VARCHAR(50) NOT NULL,
     status INT NOT NULL,
@@ -36,8 +44,7 @@ CREATE TABLE user (
     failed_task INT NOT NULL,
     complete_task INT NOT NULL,
     password_hash VARCHAR(250) NOT NULL,
-    FOREIGN KEY (city_id) REFERENCES city(id),
-    FOREIGN KEY (category_id) REFERENCES category(id)
+    FOREIGN KEY (city_id) REFERENCES city(id)
 );
 
 /*

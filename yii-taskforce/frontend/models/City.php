@@ -1,8 +1,9 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
+use \yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "city".
@@ -52,10 +53,10 @@ class City extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Users]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getUsers():object
     {
-        return $this->hasMany(User::class(), ['city_id' => 'id']);
+        return $this->hasMany(User::class, ['city_id' => 'id']);
     }
 }

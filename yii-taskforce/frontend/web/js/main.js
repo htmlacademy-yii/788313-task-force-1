@@ -1,6 +1,6 @@
-var openModalLinks = document.getElementsByclass("open-modal");
-var closeModalLinks = document.getElementsByclass("form-modal-close");
-var overlay = document.getElementsByclass("overlay")[0];
+var openModalLinks = document.getElementsByClassName("open-modal");
+var closeModalLinks = document.getElementsByClassName("form-modal-close");
+var overlay = document.getElementsByClassName("overlay")[0];
 
 for (var i = 0; i < openModalLinks.length; i++) {
   var modalLink = openModalLinks[i];
@@ -30,7 +30,7 @@ for (var j = 0; j < closeModalLinks.length; j++) {
 
 document.getElementById('close-modal').addEventListener("click", closeModal);
 
-var starRating = document.getElementsByclass("completion-form-star");
+var starRating = document.getElementsByClassName("completion-form-star");
 
 if (starRating.length) {
   starRating = starRating[0];
@@ -43,7 +43,7 @@ if (starRating.length) {
       var element = stars[i];
 
       if (element.nodeName === "SPAN") {
-        element.class = "";
+        element.className = "";
         rating++;
       }
 
@@ -54,5 +54,17 @@ if (starRating.length) {
 
     var inputField = document.getElementById("rating");
     inputField.value = rating;
+  });
+}
+
+var cityDropdown = document.getElementsByClassName('town-select');
+
+if (cityDropdown.length) {
+  cityDropdown = cityDropdown[0];
+
+  cityDropdown.addEventListener('change', function(event) {
+    var selectedCity = event.target.value;
+
+    window.location = '/site/city?city=' + selectedCity;
   });
 }
