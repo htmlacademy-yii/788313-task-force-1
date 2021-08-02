@@ -1,13 +1,17 @@
 <?php
 
 use frontend\models\Review;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use frontend\controllers\TrueForm;
-use frontend\controllers\TimePass;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $users frontend\controllers\UsersController */
+/* @var $usersForm frontend\controllers\UsersController */
 /* @var $review frontend\controllers\TrueForm */
+/* @var $categories frontend\controllers\UsersController */
+
 
 $this->title = 'Исполнители';
 $review = new TrueForm();
@@ -50,53 +54,53 @@ $review = new TrueForm();
             </section>
             <section class="search-task">
                 <div class="search-task__wrapper">
-                    <form class="search-task__form" name="users" method="post" action="#">
-                        <fieldset class="search-task__categories">
-                            <legend>Категории</legend>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="" checked disabled>
-                                <span>Курьерские услуги</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="" checked>
-                                <span>Грузоперевозки</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="">
-                                <span>Переводы</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="">
-                                <span>Строительство и ремонт</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="">
-                                <span>Выгул животных</span>
-                            </label>
-                        </fieldset>
-                        <fieldset class="search-task__categories">
-                            <legend>Дополнительно</legend>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="">
-                                <span>Сейчас свободен</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="">
-                                <span>Сейчас онлайн</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="">
-                                <span>Есть отзывы</span>
-                            </label>
-                            <label class="checkbox__legend">
-                                <input class="visually-hidden checkbox__input" type="checkbox" name="" value="">
-                                <span>В избранном</span>
-                            </label>
-                        </fieldset>
-                        <label class="search-task__name" for="110">Поиск по имени</label>
-                        <input class="input-middle input" id="110" type="search" name="q" placeholder="">
-                        <button class="button" type="submit">Искать</button>
-                    </form>
+                    <?php $form = ActiveForm::begin([
+                        'id' => 'TaskForm',
+                        'fieldConfig' => [
+                            'options' => [
+                                'tag' => false,
+                            ],
+                        ],
+                        'options' => ['class' => 'search-task__form']
+                    ]);
+                    ?>
+                    <fieldset class="search-task__categories">
+                        <legend>Категории</legend>
+                        <?php echo $form->field($usersForm, 'category_ids', [
+                            'template' => '{input}',
+                            'labelOptions' =>['class' => 'checkbox__legend']
+                        ])->checkboxList(ArrayHelper::map($categories, 'id', 'name'),
+                            ['item' => function ($index, $label, $name, $checked, $value) {
+                                return '<label class="checkbox__legend">'
+                                    . '<input class="visually-hidden checkbox__input" type="checkbox" name="'. $name . '" value="'. $value .''. $checked .'">'
+                                    . '<span>'. $label .'</span>'
+                                    . '</label>';
+                            },
+                                'unselect' => null,
+                                'tag' => false,]
+                        )?>
+                    </fieldset>
+                    <fieldset class="search-task__categories">
+                        <legend>Дополнительно</legend>
+                        <?php echo $form->field($usersForm, 'additionally', ['template' => '{input}'])
+                            ->checkboxList(['free' => 'Сейчас свободен', 'online' => 'Сейчас онлайн', 'rew' => 'Есть отзывы', 'fav' => 'В избранном'],
+                            ['item' => function ($index, $label, $name, $checked, $value) {
+                                return '<div><label class="checkbox__legend">'
+                                    . '<input class="visually-hidden checkbox__input" type="checkbox" name="'. $name . '" value="'. $value .''. $checked .'">'
+                                    . '<span>'. $label .'</span>'
+                                    . '</label></div>';
+                            },
+                                'unselect' => null,
+                                'tag' => false,]
+                        ); ?>
+                    </fieldset>
+                    <?php echo $form->field($usersForm, 'search', [
+                        'labelOptions' =>['class' => 'search-task__name'],
+                        'template' => '{label} {input}',
+                    ])->textInput(['class' => 'input-middle input'])->label('Поиск по имени');
+                    ?>
+                    <?php echo Html::submitButton('Искать', ['class' => 'button']) ?>
+                    <?php $form = ActiveForm::end();?>
                 </div>
             </section>
         </div>
