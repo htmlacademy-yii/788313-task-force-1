@@ -42,8 +42,8 @@ return [
             'enableStrictParsing' => false,
             'rules' => [
                 '/' => 'site/index',
-                'tasks' => 'tasks/index',
-                'users' => 'users/index'
+                'task' => 'task/index',
+                'user' => 'user/index'
             ],
         ],
     ],

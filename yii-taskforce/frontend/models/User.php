@@ -29,9 +29,9 @@ use \yii\base\InvalidConfigException;
  * @property string $password_hash
  *
  * @property File[] $files
- * @property Review[] $reviews
+ * @property Review[] $review
  * @property Setting[] $settings
- * @property Task[] $tasks
+ * @property Task[] $task
  * @property City $city
  * @property Category[] $Categories
  */
@@ -102,11 +102,11 @@ class User extends ActiveRecord
     }
 
     /**
-     * Gets query for [[Reviews]].
+     * Gets query for [[Review]].
      *
      * @return ActiveQuery
      */
-    public function getReviews():object
+    public function getReview():object
     {
         return $this->hasMany(Review::class, ['user_id' => 'id']);
     }
@@ -147,7 +147,7 @@ class User extends ActiveRecord
      * @return ActiveQuery
      * @throws InvalidConfigException
      */
-    public function getCategories():object
+    public function getCategory():object
     {
         return $this->hasMany(Category::class, ['id' => 'category_id'])
             ->viaTable('user_category', ['user_id' => 'id']);

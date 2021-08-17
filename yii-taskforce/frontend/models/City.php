@@ -14,7 +14,7 @@ use yii\db\ActiveRecord;
  * @property float $lat
  * @property float $lng
  *
- * @property User[] $users
+ * @property User[] $user
  */
 class City extends ActiveRecord
 {

@@ -64,8 +64,8 @@ AppAsset::register($this);
                 <?php
                 echo Menu::widget([
                     'items' => [
-                        ['label' => 'Задания', 'url' => ['tasks/index']],
-                        ['label' => 'Исполнители', 'url' => ['users/index']],
+                        ['label' => 'Задания', 'url' => ['task/index']],
+                        ['label' => 'Исполнители', 'url' => ['user/index']],
                         ['label' => 'Создать задание', 'url' => ['']],
                         ['label' => 'Мой профиль', 'url' => ['']],
                     ],

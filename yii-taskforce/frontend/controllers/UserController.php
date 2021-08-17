@@ -8,9 +8,9 @@ use frontend\models\Category;
 use yii\base\BaseObject;
 use yii\web\Controller;
 use frontend\models\User;
-use frontend\models\TasksForm;
+use frontend\models\TaskForm;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     public array $users;
     public string $sortUser; // Доделать изменение сортировки
@@ -19,16 +19,16 @@ class UsersController extends Controller
     {
         $this->sortUser = 'date_reg';
 
-        $usersForm = new TasksForm;
-        $usersForm->load(Yii::$app->request->post());
+        $userForm = new TaskForm;
+        $userForm->load(Yii::$app->request->post());
 
         $users = User::find()
-            ->joinWith(['categories'])
+            ->joinWith(['category'])
             ->where (['status' => 0])
             ->filterWhere([
                 'and',
-                ['category.id' => $usersForm['category_ids']],
-                ['like', 'user.name', $usersForm['search']]
+                ['category.id' => $userForm->getCategoryId()],
+                ['like', 'user.name', $userForm->getSearch()]
             ])
             ->orderBy($this->sortUser)
             ->all();
@@ -38,7 +38,7 @@ class UsersController extends Controller
 
         return $this->render('index', [
             'users' => $users,
-            'usersForm' => $usersForm,
+            'userForm' => $userForm,
             'categories' => $categories
         ]);
     }

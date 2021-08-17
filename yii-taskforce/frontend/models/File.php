@@ -18,7 +18,7 @@ use yii\db\ActiveRecord;
  * @property string|null $file_5
  * @property string|null $file_6
  *
- * @property User $users
+ * @property User $user
  */
 class File extends ActiveRecord
 {

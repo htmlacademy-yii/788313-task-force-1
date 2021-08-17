@@ -14,8 +14,8 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property string $code
  *
- * @property Task[] $tasks
- * @property User[] $users
+ * @property Task[] $task
+ * @property User[] $user
  */
 class Category extends ActiveRecord
 {

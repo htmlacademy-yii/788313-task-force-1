@@ -23,8 +23,8 @@ class ImportersCsv
                         'name',
                         'code']
         ],
-        'users-profiles.csv'=> [
-                    'table'  => 'users',
+        'user-profiles.csv'=> [
+                    'table'  => 'user',
                     'header' => [
                         'email',
                         'name',
@@ -37,8 +37,8 @@ class ImportersCsv
                         'skype',
                         'city_id']
         ],
-        'tasks.csv'       => [
-                    'table'  => 'tasks',
+        'task.csv'       => [
+                    'table'  => 'task',
                     'header' => [
                         'date_create',
                         'category_id',
@@ -76,7 +76,7 @@ class ImportersCsv
 
     public function joinCSVUser():void
     {
-        $user     = new SplFileObject('data/users.csv');
+        $user     = new SplFileObject('data/user.csv');
         $user->setFlags(SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD | SplFileObject::DROP_NEW_LINE);
         $profile = new SplFileObject('data/profiles.csv');
         while (!$user->eof()) {
@@ -86,7 +86,7 @@ class ImportersCsv
             $profilesResult[] = $profile->fgets();
         }
         $min = min(count($userResult), count($profilesResult));
-        $output = new SplFileObject('data/users-profiles.csv', "a+");
+        $output = new SplFileObject('data/user-profiles.csv', "a+");
         for ($i = 0; $i < $min-1; $i++) {
             $output->fwrite($userResult[$i] . ', ' . $profilesResult[$i]);
         }

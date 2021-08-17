@@ -13,7 +13,7 @@ use yii\db\ActiveRecord;
  * @property int $users_id
  * @property string $setting
  *
- * @property User $users
+ * @property User $user
  */
 class Setting extends ActiveRecord
 {

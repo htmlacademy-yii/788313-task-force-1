@@ -9,24 +9,24 @@ use yii\debug\models\search\Debug;
 use yii\web\Controller;
 use \yii\db\ActiveRecord;
 use frontend\models\Task;
-use frontend\models\TasksForm;
+use frontend\models\TaskForm;
 use frontend\models\Category;
 
-class TasksController extends Controller
+class TaskController extends Controller
 {
     public function actionIndex(): string
     {
 
-        $tasksForm = new TasksForm;
-        $tasksForm->load(Yii::$app->request->post());
+        $taskForm = new TaskForm;
+        $taskForm->load(Yii::$app->request->post());
 
         $tasks = Task::find()
             ->where (['idPerformer' => 0])
             ->filterWhere([
                 'and',
-                ['category_id' => $tasksForm['category_ids']],
-                ['>=', 'date_create', $tasksForm['period'] ? date_format(date_modify(date_create(date('Y-m-d H:i:s')),'-1 '. $tasksForm['period']),'Y-m-d') : ''],
-                ['like', 'title', $tasksForm['search']]
+                ['category_id' => $taskForm->getCategoryId()],
+                ['>=', 'date_create', $taskForm->getPeriod()],
+                ['like', 'title', $taskForm->getSearch()]
             ])
             ->orderBy('date_create DESC')
             ->all();
@@ -37,7 +37,7 @@ class TasksController extends Controller
 
         return $this->render('index', [
             'tasks' => $tasks,
-            'tasksForm' => $tasksForm,
+            'taskForm' => $taskForm,
             'categories' => $categories
         ]);
     }
