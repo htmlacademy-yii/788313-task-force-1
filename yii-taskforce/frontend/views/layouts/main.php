@@ -6,6 +6,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Url;
+use yii\web\UrlRule;
 use yii\web\View;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
@@ -31,7 +33,7 @@ AppAsset::register($this);
     <header class="page-header">
         <div class="main-container page-header__container">
             <div class="page-header__logo">
-                <a href="index.html">
+                <a href="<?php echo Url::home()?>">
                     <svg class="page-header__logo-image" id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1634 646.35">
                         <title>taskforce_logo2-01</title>
                         <g>
@@ -62,10 +64,10 @@ AppAsset::register($this);
                 <?php
                 echo Menu::widget([
                     'items' => [
-                        ['label' => 'Задания', 'url' => ['#']],
-                        ['label' => 'Исполнители', 'url' => ['#']],
-                        ['label' => 'Создать задание', 'url' => ['#']],
-                        ['label' => 'Мой профиль', 'url' => ['#']],
+                        ['label' => 'Задания', 'url' => ['task/index']],
+                        ['label' => 'Исполнители', 'url' => ['user/index']],
+                        ['label' => 'Создать задание', 'url' => ['']],
+                        ['label' => 'Мой профиль', 'url' => ['']],
                     ],
                     'options' => [
                         'class' => 'header-nav__list site-list',

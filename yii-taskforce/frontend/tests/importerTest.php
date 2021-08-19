@@ -11,7 +11,7 @@ class importerTest extends TestCase
 
     private $import;
     public string $fileName = '\data\tasks.csv';
-    public string $table = 'tasks';
+    public string $table = 'task';
     public array $header = [
         'date_create',
         'category_id',

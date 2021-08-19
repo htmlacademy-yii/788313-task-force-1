@@ -29,9 +29,9 @@ use \yii\base\InvalidConfigException;
  * @property string $password_hash
  *
  * @property File[] $files
- * @property Review[] $reviews
+ * @property Review[] $review
  * @property Setting[] $settings
- * @property Task[] $tasks
+ * @property Task[] $task
  * @property City $city
  * @property Category[] $Categories
  */
@@ -102,7 +102,7 @@ class User extends ActiveRecord
     }
 
     /**
-     * Gets query for [[Reviews]].
+     * Gets query for [[Review]].
      *
      * @return ActiveQuery
      */

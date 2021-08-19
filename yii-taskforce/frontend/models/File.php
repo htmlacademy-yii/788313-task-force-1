@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "file".
@@ -17,9 +18,9 @@ use yii\db\ActiveQuery;
  * @property string|null $file_5
  * @property string|null $file_6
  *
- * @property User $users
+ * @property User $user
  */
-class File extends \yii\db\ActiveRecord
+class File extends ActiveRecord
 {
     /**
      * {@inheritdoc}

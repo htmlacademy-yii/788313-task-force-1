@@ -5,6 +5,7 @@ namespace frontend\models;
 use Yii;
 use yii\base\InvalidConfigException;
 use \yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "category".
@@ -13,10 +14,10 @@ use \yii\db\ActiveQuery;
  * @property string $name
  * @property string $code
  *
- * @property Task[] $tasks
- * @property User[] $users
+ * @property Task[] $task
+ * @property User[] $user
  */
-class Category extends \yii\db\ActiveRecord
+class Category extends ActiveRecord
 {
     /**
      * {@inheritdoc}

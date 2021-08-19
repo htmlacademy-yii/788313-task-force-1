@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use \yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "city".
@@ -13,9 +14,9 @@ use \yii\db\ActiveQuery;
  * @property float $lat
  * @property float $lng
  *
- * @property User[] $users
+ * @property User[] $user
  */
-class City extends \yii\db\ActiveRecord
+class City extends ActiveRecord
 {
     /**
      * {@inheritdoc}
