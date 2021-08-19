@@ -9,12 +9,12 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $users frontend\controllers\UserController */
 /* @var $userForm frontend\controllers\UserController */
-/* @var $review frontend\controllers\TrueForm */
+/* @var $reviews frontend\controllers\TrueForm */
 /* @var $categories frontend\controllers\UserController */
 
 
 $this->title = 'Исполнители';
-$review = new TrueForm();
+$truFormReview = new TrueForm();
 ?>
 
 <main class="page-main">
@@ -26,9 +26,9 @@ $review = new TrueForm();
                         <div class="user__search-icon">
                             <a href="#"><img src="img/man-glasses.jpg" width="65" height="65"></a>
                             <span><?php echo $user->complete_task; ?>
-                                <?php echo $review->getTrueForm($user->complete_task, 'задание', 'задания', 'заданий') ?></span>
-                            <span><?php echo count($user->review); ?>
-                                <?php echo $review->getTrueForm(count($user->review), 'отзыв', 'отзыва', 'отзывов') ?></span>
+                                <?php echo $truFormReview->getTrueForm($user->complete_task, 'задание', 'задания', 'заданий') ?></span>
+                            <span><?php echo count($user->reviews); ?>
+                                <?php echo $truFormReview->getTrueForm(count($user->reviews), 'отзыв', 'отзыва', 'отзывов') ?></span>
                         </div>
                         <div class="feedback-card__top--name user__search-card">
                             <p class="link-name"><a href="#" class="link-regular"><?php echo $user->name; ?></a></p>
@@ -45,7 +45,7 @@ $review = new TrueForm();
                         <span class="new-task__time">Был на сайте 25 минут назад</span>
                     </div>
                     <div class="link-specialization user__search-link--bottom">
-                        <?php foreach ($user->category as $value): ?>
+                        <?php foreach ($user->categories as $value): ?>
                         <a href="#" class="link-regular"><?php echo $value->name; ?></a>
                         <?php endforeach ?>
                     </div>

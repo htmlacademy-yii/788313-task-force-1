@@ -23,7 +23,7 @@ class UserController extends Controller
         $userForm->load(Yii::$app->request->post());
 
         $users = User::find()
-            ->joinWith(['category'])
+            ->joinWith(['categories'])
             ->where (['status' => 0])
             ->filterWhere([
                 'and',

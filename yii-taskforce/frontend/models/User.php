@@ -106,7 +106,7 @@ class User extends ActiveRecord
      *
      * @return ActiveQuery
      */
-    public function getReview():object
+    public function getReviews():object
     {
         return $this->hasMany(Review::class, ['user_id' => 'id']);
     }
@@ -147,7 +147,7 @@ class User extends ActiveRecord
      * @return ActiveQuery
      * @throws InvalidConfigException
      */
-    public function getCategory():object
+    public function getCategories():object
     {
         return $this->hasMany(Category::class, ['id' => 'category_id'])
             ->viaTable('user_category', ['user_id' => 'id']);
