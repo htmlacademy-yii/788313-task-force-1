@@ -7,26 +7,23 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "review".
+ * This is the model class for table "responce".
  *
  * @property int $id
  * @property int $user_id
  * @property int $task_id
  * @property string $date_add
- * @property int $rating
+ * @property int $price
  * @property string $review
- *
- * @property User $user
- * @property Task $task
  */
-class Review extends ActiveRecord
+class Responce extends ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName():string
     {
-        return 'review';
+        return 'responce';
     }
 
     /**
@@ -35,12 +32,10 @@ class Review extends ActiveRecord
     public function rules():array
     {
         return [
-            [['user_id', 'task_id', 'date_add', 'rating', 'review'], 'required'],
-            [['user_id', 'task_id', 'rating'], 'integer'],
+            [['user_id', 'task_id', 'date_add', 'price', 'review'], 'required'],
+            [['user_id', 'task_id', 'price'], 'integer'],
             [['date_add'], 'safe'],
             [['review'], 'string'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
-            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::class, 'targetAttribute' => ['task_id' => 'id']],
         ];
     }
 
@@ -54,7 +49,7 @@ class Review extends ActiveRecord
             'user_id' => 'User ID',
             'task_id' => 'Task ID',
             'date_add' => 'Date Add',
-            'rating' => 'Rating',
+            'price' => 'Price',
             'review' => 'Review',
         ];
     }

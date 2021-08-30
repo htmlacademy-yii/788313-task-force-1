@@ -43,7 +43,9 @@ return [
             'rules' => [
                 '/' => 'site/index',
                 'task' => 'task/index',
-                'user' => 'user/index'
+                'user' => 'user/index',
+                'task/<id:\d+>' => 'task/view',
+                'user/<id:\d+>' => 'user/view'
             ],
         ],
     ],

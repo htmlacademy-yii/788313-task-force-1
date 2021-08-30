@@ -111,3 +111,14 @@ CREATE TABLE review (
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (task_id) REFERENCES task(id)
 );
+
+CREATE TABLE responce (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    task_id INT NOT NULL,
+    date_add DATETIME NOT NULL,
+    price INT NOT NULL,
+    review TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (task_id) REFERENCES task(id)
+);

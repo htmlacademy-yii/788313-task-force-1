@@ -9,6 +9,7 @@ use yii\base\BaseObject;
 use yii\web\Controller;
 use frontend\models\User;
 use frontend\models\TaskForm;
+use yii\web\NotFoundHttpException;
 
 class UserController extends Controller
 {
@@ -40,6 +41,25 @@ class UserController extends Controller
             'users' => $users,
             'userForm' => $userForm,
             'categories' => $categories
+        ]);
+    }
+
+    /**
+     * @throws NotFoundHttpException
+     */
+    public function actionView($id): string
+    {
+        $user = User::find()
+            ->where (['id' => $id])
+            ->one();
+
+        if (empty($user))
+        {
+            throw new NotFoundHttpException('Такого пользователя не существует');
+        }
+
+        return $this->render('view', [
+            'user' => $user
         ]);
     }
 

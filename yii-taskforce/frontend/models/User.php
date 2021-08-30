@@ -23,7 +23,6 @@ use \yii\base\InvalidConfigException;
  * @property string $address
  * @property int $city_id
  * @property string $about
- * @property int $rating
  * @property int $failed_task
  * @property int $complete_task
  * @property string $password_hash
@@ -51,7 +50,7 @@ class User extends ActiveRecord
     public function rules():array
     {
         return [
-            [['date_reg', 'name', 'status', 'email', 'phone', 'skype', 'telegram', 'img', 'birthday', 'address', 'city_id', 'about', 'rating', 'failed_task', 'complete_task', 'password_hash'], 'required'],
+            [['date_reg', 'name', 'status', 'email', 'phone', 'skype', 'telegram', 'img', 'birthday', 'address', 'city_id', 'about', 'failed_task', 'complete_task', 'password_hash'], 'required'],
             [['date_reg', 'birthday'], 'safe'],
             [['status', 'city_id', 'rating', 'failed_task', 'complete_task'], 'integer'],
             [['name', 'email'], 'string', 'max' => 50],
@@ -84,7 +83,6 @@ class User extends ActiveRecord
             'address' => 'Address',
             'city_id' => 'City ID',
             'about' => 'About',
-            'rating' => 'Rating',
             'failed_task' => 'Failed Task',
             'complete_task' => 'Complete Task',
             'password_hash' => 'Password Hash',
@@ -96,7 +94,7 @@ class User extends ActiveRecord
      *
      * @return ActiveQuery
      */
-    public function getFiles():object
+    public function getFiles():ActiveQuery
     {
         return $this->hasMany(File::class, ['users_id' => 'id']);
     }
@@ -106,9 +104,19 @@ class User extends ActiveRecord
      *
      * @return ActiveQuery
      */
-    public function getReviews():object
+    public function getReviews():ActiveQuery
     {
         return $this->hasMany(Review::class, ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Responses]].
+     *
+     * @return ActiveQuery
+     */
+    public function getResponses():ActiveQuery
+    {
+        return $this->hasMany(Responce::class, ['user_id' => 'id']);
     }
 
     /**
@@ -116,7 +124,7 @@ class User extends ActiveRecord
      *
      * @return ActiveQuery
      */
-    public function getSettings():object
+    public function getSettings():ActiveQuery
     {
         return $this->hasMany(Setting::class, ['users_id' => 'id']);
     }
@@ -126,7 +134,7 @@ class User extends ActiveRecord
      *
      * @return ActiveQuery
      */
-    public function getTasks():object
+    public function getTasks():ActiveQuery
     {
         return $this->hasMany(Task::class, ['user_id' => 'id']);
     }
@@ -136,7 +144,7 @@ class User extends ActiveRecord
      *
      * @return ActiveQuery
      */
-    public function getCity():object
+    public function getCity():ActiveQuery
     {
         return $this->hasOne(City::class, ['id' => 'city_id']);
     }
@@ -147,9 +155,15 @@ class User extends ActiveRecord
      * @return ActiveQuery
      * @throws InvalidConfigException
      */
-    public function getCategories():object
+    public function getCategories():ActiveQuery
     {
         return $this->hasMany(Category::class, ['id' => 'category_id'])
             ->viaTable('user_category', ['user_id' => 'id']);
+    }
+
+    public function getRating():?float
+    {
+        $median = $this->getReviews()->average('rating');
+        return number_format($median, 1, '.', '');
     }
 }
