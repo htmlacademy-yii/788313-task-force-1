@@ -86,9 +86,19 @@ class Task extends ActiveRecord
      *
      * @return ActiveQuery
      */
-    public function getReviews():object
+    public function getReviews():ActiveQuery
     {
         return $this->hasMany(Review::class, ['task_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Responses]].
+     *
+     * @return ActiveQuery
+     */
+    public function getResponses():ActiveQuery
+    {
+        return $this->hasMany(Responce::class, ['task_id' => 'id']);
     }
 
     /**
@@ -96,7 +106,7 @@ class Task extends ActiveRecord
      *
      * @return ActiveQuery
      */
-    public function getUser():object
+    public function getUser():ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
@@ -106,7 +116,7 @@ class Task extends ActiveRecord
      *
      * @return ActiveQuery
      */
-    public function getCategory():object
+    public function getCategory():ActiveQuery
     {
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }

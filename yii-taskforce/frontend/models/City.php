@@ -56,7 +56,7 @@ class City extends ActiveRecord
      *
      * @return ActiveQuery
      */
-    public function getUsers():object
+    public function getUsers():ActiveQuery
     {
         return $this->hasMany(User::class, ['city_id' => 'id']);
     }

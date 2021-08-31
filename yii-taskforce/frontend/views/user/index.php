@@ -4,17 +4,17 @@ use frontend\models\Review;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use frontend\controllers\TrueForm;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $users frontend\controllers\UserController */
 /* @var $userForm frontend\controllers\UserController */
-/* @var $reviews frontend\controllers\TrueForm */
 /* @var $categories frontend\controllers\UserController */
 
 
 $this->title = 'Исполнители';
-$truFormReview = new TrueForm();
+$trueForm = new TrueForm();
 ?>
 
 <main class="page-main">
@@ -24,20 +24,20 @@ $truFormReview = new TrueForm();
                 <div class="content-view__feedback-card user__search-wrapper">
                     <div class="feedback-card__top">
                         <div class="user__search-icon">
-                            <a href="#"><img src="img/man-glasses.jpg" width="65" height="65"></a>
+                            <a href="<?php echo Url::to(['user/view', 'id' => $user->id]); ?>"><img src="..\img\man-glasses.jpg" width="65" height="65" alt="<?php echo $user->name; ?>"></a>
                             <span><?php echo $user->complete_task; ?>
-                                <?php echo $truFormReview->getTrueForm($user->complete_task, 'задание', 'задания', 'заданий') ?></span>
+                                <?php echo $trueForm->getTrueForm($user->complete_task, 'задание', 'задания', 'заданий'); ?></span>
                             <span><?php echo count($user->reviews); ?>
-                                <?php echo $truFormReview->getTrueForm(count($user->reviews), 'отзыв', 'отзыва', 'отзывов') ?></span>
+                                <?php echo $trueForm->getTrueForm(count($user->reviews), 'отзыв', 'отзыва', 'отзывов'); ?></span>
                         </div>
                         <div class="feedback-card__top--name user__search-card">
-                            <p class="link-name"><a href="#" class="link-regular"><?php echo $user->name; ?></a></p>
-                            <span <?php echo ($user->rating < 1) ? 'class="star-disabled"' : ""; ?>></span>
-                            <span <?php echo ($user->rating < 2) ? 'class="star-disabled"' : ""; ?>></span>
-                            <span <?php echo ($user->rating < 3) ? 'class="star-disabled"' : ""; ?>></span>
-                            <span <?php echo ($user->rating < 4) ? 'class="star-disabled"' : ""; ?>></span>
-                            <span <?php echo ($user->rating < 5) ? 'class="star-disabled"' : ""; ?>></span>
-                            <b><?php echo $user->rating; ?></b>
+                            <p class="link-name"><a href="<?php echo Url::to(['user/view', 'id' => $user->id]); ?>" class="link-regular"><?php echo $user->name; ?></a></p>
+                            <span <?php echo ($user->getRating() < 1) ? 'class="star-disabled"' : ""; ?>></span>
+                            <span <?php echo ($user->getRating() < 2) ? 'class="star-disabled"' : ""; ?>></span>
+                            <span <?php echo ($user->getRating() < 3) ? 'class="star-disabled"' : ""; ?>></span>
+                            <span <?php echo ($user->getRating() < 4) ? 'class="star-disabled"' : ""; ?>></span>
+                            <span <?php echo ($user->getRating() < 5) ? 'class="star-disabled"' : ""; ?>></span>
+                            <b><?php echo $user->getRating(); ?></b>
                             <p class="user__search-content">
                                 <?php echo $user->about; ?>
                             </p>
@@ -99,7 +99,7 @@ $truFormReview = new TrueForm();
                         'template' => '{label} {input}',
                     ])->textInput(['class' => 'input-middle input'])->label('Поиск по имени');
                     ?>
-                    <?php echo Html::submitButton('Искать', ['class' => 'button']) ?>
+                    <?php echo Html::submitButton('Искать', ['class' => 'button']); ?>
                     <?php $form = ActiveForm::end();?>
                 </div>
             </section>

@@ -14,8 +14,8 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property string $code
  *
- * @property Task[] $task
- * @property User[] $user
+ * @property Task[] $tasks
+ * @property User[] $users
  */
 class Category extends ActiveRecord
 {
@@ -57,7 +57,7 @@ class Category extends ActiveRecord
      *
      * @return ActiveQuery
      */
-    public function getTasks():object
+    public function getTasks():ActiveQuery
     {
         return $this->hasMany(Task::class, ['category_id' => 'id']);
     }
@@ -68,7 +68,7 @@ class Category extends ActiveRecord
      * @return ActiveQuery
      * @throws InvalidConfigException
      */
-    public function getUsers():object
+    public function getUsers():ActiveQuery
     {
         return $this->hasMany(User::class, ['id' => 'user_id'])
             ->viaTable('user_category', ['category_id' => 'id']);
