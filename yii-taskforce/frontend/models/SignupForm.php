@@ -1,79 +1,63 @@
 <?php
+
 namespace frontend\models;
 
 use Yii;
+use yii\base\Exception;
 use yii\base\Model;
-use common\models\User;
 
-/**
- * Signup form
- */
 class SignupForm extends Model
 {
-    public $username;
     public $email;
+    public $name;
+    public $city;
     public $password;
 
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
+    public function attributeLabels() :array
     {
         return [
-            ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            'email' => 'Электронная почта',
+            'name' => 'Ваше имя',
+            'city' => 'Город проживания',
+            'password' => 'Пароль'
+        ];
+    }
 
-            ['email', 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
-            ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-
-            ['password', 'required'],
-            ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+    public function rules() :array
+    {
+        return [
+            ['city', 'integer'],
+            [['email', 'name'], 'trim'],
+            [['email', 'name','password'], 'required'],
+            ['email', 'email', 'message' => 'Введите валидный адрес электронной почты'],
+            ['email', 'string', 'max' => 50],
+            ['email', 'unique', 'targetClass' => User::class, 'message' => 'Введенный адрес электронной почты уже занят' ],
+            ['name', 'string', 'min' => 2, 'max' => 50, 'message' => 'Введите ваше имя'],
+            ['password', 'string', 'min' => 6, 'max' => 250],
         ];
     }
 
     /**
-     * Signs user up.
-     *
-     * @return bool whether the creating new account was successful and email was sent
+     * @throws Exception
      */
-    public function signup()
+    public function signup():bool
     {
-        if (!$this->validate()) {
-            return null;
-        }
-
         $user = new User();
-        $user->username = $this->username;
         $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
-        return $user->save() && $this->sendEmail($user);
-
+        $user->name = $this->name;
+        $user->city_id = $this->city + 1;
+        $user->password_hash = Yii::$app->security->generatePasswordHash($this->password);
+        $user->date_reg = date('Y-m-d H:i:s');
+        $user->failed_task = 0;
+        $user->complete_task = 0;
+        $user->about = '';
+        $user->phone = '';
+        $user->address = '';
+        $user->skype = '';
+        $user->telegram = '';
+        $user->img = '';
+        $user->birthday = date('Y-m-d');
+        return $user->save(false);
     }
 
-    /**
-     * Sends confirmation email to user
-     * @param User $user user model to with email should be send
-     * @return bool whether the email was sent
-     */
-    protected function sendEmail($user)
-    {
-        return Yii::$app
-            ->mailer
-            ->compose(
-                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-                ['user' => $user]
-            )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-            ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
-            ->send();
-    }
 }

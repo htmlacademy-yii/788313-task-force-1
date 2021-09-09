@@ -29,9 +29,9 @@ class SignupCest
     {
         $I->submitForm(
             $this->formId, [
-            'SignupForm[username]'  => 'tester',
-            'SignupForm[email]'     => 'ttttt',
-            'SignupForm[password]'  => 'tester_password',
+            'Signup[username]'  => 'tester',
+            'Signup[email]'     => 'ttttt',
+            'Signup[password]'  => 'tester_password',
         ]
         );
         $I->dontSee('Username cannot be blank.', '.help-block');
@@ -42,9 +42,9 @@ class SignupCest
     public function signupSuccessfully(FunctionalTester $I)
     {
         $I->submitForm($this->formId, [
-            'SignupForm[username]' => 'tester',
-            'SignupForm[email]' => 'tester.email@example.com',
-            'SignupForm[password]' => 'tester_password',
+            'Signup[username]' => 'tester',
+            'Signup[email]' => 'tester.email@example.com',
+            'Signup[password]' => 'tester_password',
         ]);
 
         $I->seeRecord('common\models\User', [

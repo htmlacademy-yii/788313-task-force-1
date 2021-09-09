@@ -27,10 +27,8 @@ CREATE TABLE user_category (
 
 CREATE TABLE user (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    user_category_id INT NOT NULL,
     date_reg DATETIME NOT NULL,
     name VARCHAR(50) NOT NULL,
-    status INT NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     phone VARCHAR(11) NOT NULL,
     skype VARCHAR(40) NOT NULL,
@@ -40,7 +38,6 @@ CREATE TABLE user (
     address VARCHAR(100) NOT NULL,
     city_id INT NOT NULL,
     about VARCHAR(200) NOT NULL,
-    rating INT NOT NULL,
     failed_task INT NOT NULL,
     complete_task INT NOT NULL,
     password_hash VARCHAR(250) NOT NULL,

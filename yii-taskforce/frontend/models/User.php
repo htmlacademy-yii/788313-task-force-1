@@ -3,9 +3,9 @@
 namespace frontend\models;
 
 use Yii;
-use \yii\db\ActiveQuery;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use \yii\base\InvalidConfigException;
+use yii\base\InvalidConfigException;
 
 /**
  * This is the model class for table "user".
@@ -13,7 +13,6 @@ use \yii\base\InvalidConfigException;
  * @property int $id
  * @property string $date_reg
  * @property string $name
- * @property int $status
  * @property string $email
  * @property string $phone
  * @property string $skype
@@ -50,9 +49,9 @@ class User extends ActiveRecord
     public function rules():array
     {
         return [
-            [['date_reg', 'name', 'status', 'email', 'phone', 'skype', 'telegram', 'img', 'birthday', 'address', 'city_id', 'about', 'failed_task', 'complete_task', 'password_hash'], 'required'],
+            [['date_reg', 'name', 'email', 'phone', 'skype', 'telegram', 'img', 'birthday', 'address', 'city_id', 'about', 'failed_task', 'complete_task', 'password_hash'], 'required'],
             [['date_reg', 'birthday'], 'safe'],
-            [['status', 'city_id', 'rating', 'failed_task', 'complete_task'], 'integer'],
+            [['city_id', 'failed_task', 'complete_task'], 'integer'],
             [['name', 'email'], 'string', 'max' => 50],
             [['phone'], 'string', 'max' => 11],
             [['skype', 'telegram'], 'string', 'max' => 40],
@@ -73,7 +72,6 @@ class User extends ActiveRecord
             'id' => 'ID',
             'date_reg' => 'Date Reg',
             'name' => 'Name',
-            'status' => 'Status',
             'email' => 'Email',
             'phone' => 'Phone',
             'skype' => 'Skype',

@@ -3,7 +3,7 @@
 
 namespace frontend\models;
 
-use \yii\base\Model;
+use yii\base\Model;
 use yii\base\BaseObject;
 
 class TaskForm extends Model
