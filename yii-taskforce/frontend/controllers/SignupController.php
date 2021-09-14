@@ -14,17 +14,17 @@ class SignupController extends Controller
     /**
      * @throws Exception
      */
-    public function actionIndex(): string
+    public function actionIndex()
     {
         $signupForm = new SignupForm();
 
         if ($signupForm->load(Yii::$app->request->post()) && $signupForm->validate()) {
             $signupForm->signup();
-            $this->goHome();
+            return $this->goHome();
         }
 
         $city = City::find()
-            ->select(  'name')
+            ->select('name')
             ->column();
 
         return $this->render('index', [
