@@ -66,8 +66,8 @@ AppAsset::register($this);
                     'items' => [
                         ['label' => 'Задания', 'url' => ['task/index']],
                         ['label' => 'Исполнители', 'url' => ['user/index']],
-                        ['label' => 'Создать задание', 'url' => ['']],
-                        ['label' => 'Мой профиль', 'url' => ['']],
+                        Yii::$app->request->pathInfo !== 'signup' ? ['label' => 'Создать задание', 'url' => ['']] : [],
+                        Yii::$app->request->pathInfo !== 'signup' ? ['label' => 'Мой профиль', 'url' => ['']] : [],
                     ],
                     'options' => [
                         'class' => 'header-nav__list site-list',
@@ -78,6 +78,7 @@ AppAsset::register($this);
                                       ]);
                 ?>
             </div>
+            <?php if (Yii::$app->request->pathInfo !== 'signup') : ?>
             <div class="header__town">
                 <select class="multiple-select input town-select" size="1" name="town[]">
                     <option value="Moscow">Москва</option>
@@ -126,6 +127,7 @@ AppAsset::register($this);
                     </li>
                 </ul>
             </div>
+            <?php endif; ?>
         </div>
     </header>
 
@@ -150,16 +152,16 @@ AppAsset::register($this);
             <div class="page-footer__links">
                 <ul class="links__list">
                     <li class="links__item">
-                        <a href="">Задания</a>
+                        <a href="<?php echo Url::to('task'); ?>">Задания</a>
                     </li>
                     <li class="links__item">
                         <a href="">Мой профиль</a>
                     </li>
                     <li class="links__item">
-                        <a href="">Исполнители</a>
+                        <a href="<?php echo Url::to('user'); ?>">Исполнители</a>
                     </li>
                     <li class="links__item">
-                        <a href="">Регистрация</a>
+                        <a href="<?php echo Url::to('signup'); ?>">Регистрация</a>
                     </li>
                     <li class="links__item">
                         <a href="">Создать задание</a>
@@ -177,6 +179,20 @@ AppAsset::register($this);
                          alt="Логотип HTML Academy">
                 </a>
             </div>
+            <?php if (Yii::$app->request->pathInfo == 'signup') : ?>
+            <div class="clipart-woman">
+                <img src="..\img\clipart-woman.png" width="238" height="450">
+            </div>
+            <div class="clipart-message">
+                <div class="clipart-message-text">
+                    <h2>Знаете ли вы, что?</h2>
+                    <p>После регистрации вам будет доступно более
+                        двух тысяч заданий из двадцати разных категорий.</p>
+                    <p>В среднем, наши исполнители зарабатывают
+                        от 500 рублей в час.</p>
+                </div>
+            </div>
+            <?php endif; ?>
         </div>
     </footer>
 </div>

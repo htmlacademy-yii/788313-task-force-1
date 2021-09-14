@@ -59,10 +59,10 @@ $trueForm = new TrueForm();
                         'fieldConfig' => [
                             'options' => [
                                 'tag' => false,
+                                ],
                             ],
-                        ],
                         'options' => ['class' => 'search-task__form']
-                    ]);
+                        ]);
                     ?>
                     <fieldset class="search-task__categories">
                         <legend>Категории</legend>
@@ -71,7 +71,7 @@ $trueForm = new TrueForm();
                             'labelOptions' =>['class' => 'checkbox__legend']
                         ])->checkboxList(ArrayHelper::map($categories, 'id', 'name'),
                             ['item' => function ($index, $label, $name, $checked, $value) {
-                                $chek = $checked ? 'checked' : "";
+                                $chek = $checked ? 'checked' : '';
                                 return '<label class="checkbox__legend">'
                                     . '<input class="visually-hidden checkbox__input" type="checkbox" name="'. $name . '" value="'. $value . '" ' . $chek . '>'
                                     . '<span>'. $label .'</span>'
@@ -85,7 +85,7 @@ $trueForm = new TrueForm();
                         <?php echo $form->field($userForm, 'additionally', ['template' => '{input}'])
                             ->checkboxList(['free' => 'Сейчас свободен', 'online' => 'Сейчас онлайн', 'rew' => 'Есть отзывы', 'fav' => 'В избранном'],
                             ['item' => function ($index, $label, $name, $checked, $value) {
-                                $chek = $checked ? 'checked' : "";
+                                $chek = $checked ? 'checked' : '';
                                 return '<div><label class="checkbox__legend">'
                                     . '<input class="visually-hidden checkbox__input" type="checkbox" name="'. $name . '" value="'. $value . '" ' . $chek . '>'
                                     . '<span>'. $label .'</span>'

@@ -54,8 +54,8 @@ $this->title = 'Новые задания';
                     'fieldConfig' => [
                         'options' => [
                             'tag' => false,
+                            ],
                         ],
-                    ],
                     'options' => ['class' => 'search-task__form']
                      ]);
                 ?>
@@ -80,7 +80,7 @@ $this->title = 'Новые задания';
                         <?php echo $form->field($taskForm, 'additionally', ['template' => '{input}'])
                             ->checkboxList(['nonUsers' => 'Без исполнителя', 'offCity' => 'Удаленная работа'],
                             ['item' => function ($index, $label, $name, $checked, $value) {
-                                $chek = $checked ? 'checked' : "";
+                                $chek = $checked ? 'checked' : '';
                                 return '<div><label class="checkbox__legend">'
                                     . '<input class="visually-hidden checkbox__input" type="checkbox" name="' . $name . '" value="' . $value . '" ' . $chek . '>'
                                     . '<span>'. $label .'</span>'

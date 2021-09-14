@@ -13,7 +13,6 @@ use yii\web\NotFoundHttpException;
 
 class UserController extends Controller
 {
-    public array $users;
     public string $sortUser; // Доделать изменение сортировки
 
     public function actionIndex():string
@@ -24,8 +23,7 @@ class UserController extends Controller
         $userForm->load(Yii::$app->request->post());
 
         $users = User::find()
-            ->joinWith(['categories'])
-            ->where (['status' => 0])
+            ->joinWith('categories', true,'INNER JOIN')
             ->filterWhere([
                 'and',
                 ['category.id' => $userForm->getCategoryId()],
