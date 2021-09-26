@@ -3,7 +3,7 @@
 use frontend\models\Review;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use frontend\controllers\TrueForm;
+use frontend\models\TrueForm;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 

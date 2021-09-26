@@ -1,7 +1,7 @@
 <?php
 
 
-namespace frontend\controllers;
+namespace frontend\models;
 
 
 class TrueForm

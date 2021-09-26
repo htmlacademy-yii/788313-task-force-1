@@ -2,15 +2,13 @@
 
 namespace frontend\controllers;
 
+use frontend\models\LoginForm;
+use frontend\models\Task;
 use Yii;
-use frontend\models\City;
-use frontend\models\SignupForm;
-use yii\base\Exception;
 use yii\filters\AccessControl;
-use yii\helpers\Url;
 use yii\web\Controller;
 
-class SignupController extends Controller
+class LoginController extends Controller
 {
     public function behaviors():array
     {
@@ -30,25 +28,29 @@ class SignupController extends Controller
         ];
     }
 
-    /**
-     * @throws Exception
-     */
     public function actionIndex()
     {
-        $signupForm = new SignupForm();
+        $loginForm = new LoginForm();
 
-        if ($signupForm->load(Yii::$app->request->post()) && $signupForm->validate()) {
-            $signupForm->signup();
-            return $this->goHome();
+        if (Yii::$app->request->getIsPost()) {
+            $loginForm->load(Yii::$app->request->post());
+            if ($loginForm->validate()) {
+                $user = $loginForm->getUser();
+                Yii::$app->user->login($user);
+                return Yii::$app->response->redirect(['task']);
+            }
         }
+        $this->layout = 'login';
 
-        $city = City::find()
-            ->select('name')
-            ->column();
+        $lastTask = Task::find()
+            ->orderBy('date_create DESC')
+            ->limit(4)
+            ->all();
+
+        Yii::$app->getView()->params['lastTask'] = $lastTask;
 
         return $this->render('index', [
-            'city' => $city,
-            'signupForm' => $signupForm
+            'loginForm' => $loginForm
         ]);
     }
 }

@@ -6,6 +6,7 @@ use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\base\InvalidConfigException;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "user".
@@ -33,7 +34,7 @@ use yii\base\InvalidConfigException;
  * @property City $city
  * @property Category[] $Categories
  */
-class User extends ActiveRecord
+class User extends ActiveRecord implements IdentityInterface
 {
     /**
      * {@inheritdoc}
@@ -70,19 +71,19 @@ class User extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'date_reg' => 'Date Reg',
-            'name' => 'Name',
-            'email' => 'Email',
-            'phone' => 'Phone',
+            'date_reg' => 'Дата регистрации',
+            'name' => 'Имя',
+            'email' => 'Электронная почта',
+            'phone' => 'Номер телефона',
             'skype' => 'Skype',
             'telegram' => 'Telegram',
             'img' => 'Img',
-            'birthday' => 'Birthday',
-            'address' => 'Address',
+            'birthday' => 'День рождения',
+            'address' => 'Адрес',
             'city_id' => 'City ID',
-            'about' => 'About',
-            'failed_task' => 'Failed Task',
-            'complete_task' => 'Complete Task',
+            'about' => 'Обо мне',
+            'failed_task' => 'Проваленные задания',
+            'complete_task' => 'Выполненные задания',
             'password_hash' => 'Password Hash',
         ];
     }
@@ -163,5 +164,34 @@ class User extends ActiveRecord
     {
         $median = $this->getReviews()->average('rating');
         return number_format($median, 1, '.', '');
+    }
+
+    public static function findIdentity($id)
+    {
+        return self::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        // TODO: Implement findIdentityByAccessToken() method.
+    }
+
+    public function getId()
+    {
+        return $this->getPrimaryKey();
+    }
+
+    public function getAuthKey()
+    {
+        // TODO: Implement getAuthKey() method.
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        // TODO: Implement validateAuthKey() method.
+    }
+    public function validatePassword($password)
+    {
+        return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 }

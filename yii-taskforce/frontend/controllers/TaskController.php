@@ -5,39 +5,48 @@ namespace frontend\controllers;
 
 
 use Yii;
-use yii\web\Controller;
-use \yii\db\ActiveRecord;
 use frontend\models\Task;
 use frontend\models\TaskForm;
 use frontend\models\Category;
+use yii\filters\AccessControl;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
-class TaskController extends Controller
+
+class TaskController extends SecuredController
 {
-    public function actionIndex(): string
+
+    public function actionIndex($cat = null):string
     {
         $taskForm = new TaskForm;
         $taskForm->load(Yii::$app->request->post());
 
+        $categories = Category::find()
+            ->all();
+
+        if ($cat) {
+            $category = Category::find()
+                ->select('id')
+                ->where(['code' => $cat])
+                ->one();
+        }
         $tasks = Task::find()
             ->where (['idPerformer' => 0])
             ->filterWhere([
                 'and',
-                ['category_id' => $taskForm->getCategoryId()],
+                ['category_id' => $category ?? $taskForm->getCategoryId()],
                 ['>=', 'date_create', $taskForm->getPeriod()],
                 ['like', 'title', $taskForm->getSearch()]
             ])
             ->orderBy('date_create DESC')
             ->all();
 
-        $categories = Category::find()
-            ->all();
-
-
         return $this->render('index', [
             'tasks' => $tasks,
             'taskForm' => $taskForm,
-            'categories' => $categories
+            'categories' => $categories,
+            'cat' => $cat
         ]);
     }
 
@@ -60,5 +69,6 @@ class TaskController extends Controller
             'task' => $task
         ]);
     }
+
 
 }

@@ -6,7 +6,7 @@ use \yii\i18n\Formatter;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use \yii\widgets\Pjax;
-use frontend\controllers\TrueForm;
+use frontend\models\TrueForm;
 
 /* @var $task frontend\controllers\TaskController */
 
@@ -25,7 +25,7 @@ $responses = $task->responses;
                             <h1><?php echo $task->title; ?></h1>
                             <span>Размещено в категории
                                     <a href="#" class="link-regular"><?php echo $task->category->name; ?></a>
-                                    25 минут назад
+                                    <?php echo Yii::$app->formatter->asRelativeTime($task->date_create); ?>
                             </span>
                         </div>
                         <b class="new-task__price new-task__price--<?php echo $task->category->code; ?> content-view-price"><?php echo $task->price; ?><b> ₽</b></b>
@@ -86,7 +86,7 @@ $responses = $task->responses;
                                 <span <?php echo ($responce->user->getRating() < 5) ? 'class="star-disabled"' : ""; ?>></span>
                                 <b><?php echo $responce->user->getRating(); ?></b>
                             </div>
-                            <span class="new-task__time">25 минут назад</span>
+                            <span class="new-task__time"><?php echo Yii::$app->formatter->asRelativeTime($responce->date_add); ?></span>
                         </div>
                         <div class="feedback-card__content">
                             <p><?php echo $responce->review; ?></p>

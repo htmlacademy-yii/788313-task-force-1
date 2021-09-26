@@ -1,4 +1,9 @@
 <?php
+
+use yii\web\JqueryAsset;
+use yii\web\YiiAsset;
+use yii\widgets\ActiveFormAsset;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -16,9 +21,9 @@ return [
             'csrfParam' => '_csrf-frontend',
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'identityClass' => 'frontend\models\User',
+            /*'enableAutoLogin' => true,
+            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],*/
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
@@ -41,12 +46,21 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                '/' => 'site/index',
+                '/' => 'login/index',
                 'task' => 'task/index',
                 'user' => 'user/index',
                 'task/<id:\d+>' => 'task/view',
                 'user/<id:\d+>' => 'user/view',
+                'task/<cat:\w+>' => 'task/index',
                 'signup' => 'signup/index'
+            ],
+        ],
+        'assetManager' => [
+            'linkAssets' => true,
+            'bundles' => [
+                JqueryAsset::class => false,
+                ActiveFormAsset::class => false,
+                YiiAsset::class => false,
             ],
         ],
     ],

@@ -1,6 +1,6 @@
 <?php
 
-use frontend\controllers\TrueForm;
+use frontend\models\TrueForm;
 use yii\helpers\Url;
 
 /* @var $user frontend\controllers\UserController */

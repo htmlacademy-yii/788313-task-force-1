@@ -11,7 +11,7 @@ use frontend\models\User;
 use frontend\models\TaskForm;
 use yii\web\NotFoundHttpException;
 
-class UserController extends Controller
+class UserController extends SecuredController
 {
     public string $sortUser; // Доделать изменение сортировки
 
@@ -59,6 +59,12 @@ class UserController extends Controller
         return $this->render('view', [
             'user' => $user
         ]);
+    }
+
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+        return $this->goHome();
     }
 
 
