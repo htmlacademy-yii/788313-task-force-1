@@ -1,11 +1,10 @@
 <?php
 
 use yii\helpers\Html;
-use \yii\i18n\Formatter;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use \yii\widgets\Pjax;
 use yii\helpers\Url;
+use \yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $tasks frontend\controllers\TaskController */

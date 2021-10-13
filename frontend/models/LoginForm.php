@@ -3,13 +3,11 @@
 namespace frontend\models;
 
 use yii\base\Model;
-use frontend\models\User;
 
 class LoginForm extends Model
 {
     public $email;
     public $password;
-
     private $_user;
 
     public function attributeLabels(): array

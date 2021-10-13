@@ -17,6 +17,7 @@ $this->title = 'Регистрация';
                 <?php $form = ActiveForm::begin([
                     'id' => 'TaskForm',
                     'options' => ['class' => 'registration__user-form form-create'],
+                    'validationUrl' => ['signup/validate-email'],
                     'errorCssClass' => 'has-error',
                     'fieldConfig' => [
                         'options' => ['class' => 'field-container field-container--registration'],
@@ -24,7 +25,7 @@ $this->title = 'Регистрация';
                         'errorOptions' => ['tag' => 'span', 'class' => 'registration__text-error']
                     ]
                     ]); ?>
-                    <?php echo $form->field($signupForm, 'email'); ?>
+                    <?php echo $form->field($signupForm, 'email', ['enableAjaxValidation' => true]); ?>
                     <?php echo $form->field($signupForm, 'name'); ?>
                     <?php echo $form->field($signupForm, 'city')->dropdownList($city); ?>
                     <?php echo $form->field($signupForm, 'password')->passwordInput(); ?>

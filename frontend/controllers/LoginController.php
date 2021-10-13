@@ -21,9 +21,8 @@ class LoginController extends Controller
                         'roles' => ['?']
                     ]
                 ],
-                'denyCallback' => function ($rule, $action) {
-                    return Yii::$app->response->redirect(['task/index']);
-                }
+                'denyCallback' => fn ($rule, $action) => Yii::$app->response->redirect(['task/index'])
+
             ]
         ];
     }
@@ -31,6 +30,7 @@ class LoginController extends Controller
     public function actionIndex()
     {
         $loginForm = new LoginForm();
+        $this->layout = 'login';
 
         if (Yii::$app->request->getIsPost()) {
             $loginForm->load(Yii::$app->request->post());
@@ -40,7 +40,6 @@ class LoginController extends Controller
                 return Yii::$app->response->redirect(['task']);
             }
         }
-        $this->layout = 'login';
 
         $lastTask = Task::find()
             ->orderBy('date_create DESC')
@@ -53,4 +52,17 @@ class LoginController extends Controller
             'loginForm' => $loginForm
         ]);
     }
+
+    /*public function actionValidateEmail()
+    {
+        // validate for ajax request
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $loginForm = new LoginForm();
+            $loginForm->load(Yii::$app->request->post());
+
+            return ActiveForm::validate($loginForm);
+        }
+    }*/
 }

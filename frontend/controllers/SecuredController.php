@@ -19,9 +19,8 @@ class SecuredController extends Controller
                         'roles' => ['@']
                     ]
                 ],
-                'denyCallback' => function ($rule, $action) {
-                    return Yii::$app->response->redirect(['login/index']);
-                }
+                'denyCallback' => fn ($rule, $action) => Yii::$app->response->redirect(['login/index'])
+
             ]
         ];
     }

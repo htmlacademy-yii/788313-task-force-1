@@ -1,11 +1,6 @@
 <?php
 
 use yii\helpers\Url;
-use yii\helpers\Html;
-use \yii\i18n\Formatter;
-use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use \yii\widgets\Pjax;
 use frontend\models\TrueForm;
 
 /* @var $task frontend\controllers\TaskController */

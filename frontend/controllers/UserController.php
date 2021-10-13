@@ -5,11 +5,10 @@ namespace frontend\controllers;
 
 use Yii;
 use frontend\models\Category;
-use yii\base\BaseObject;
-use yii\web\Controller;
 use frontend\models\User;
 use frontend\models\TaskForm;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class UserController extends SecuredController
 {
@@ -61,7 +60,7 @@ class UserController extends SecuredController
         ]);
     }
 
-    public function actionLogout()
+    public function actionLogout(): Response
     {
         Yii::$app->user->logout();
         return $this->goHome();

@@ -8,10 +8,7 @@ use Yii;
 use frontend\models\Task;
 use frontend\models\TaskForm;
 use frontend\models\Category;
-use yii\filters\AccessControl;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
 
 
 class TaskController extends SecuredController

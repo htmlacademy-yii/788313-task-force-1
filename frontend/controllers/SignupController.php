@@ -7,8 +7,9 @@ use frontend\models\City;
 use frontend\models\SignupForm;
 use yii\base\Exception;
 use yii\filters\AccessControl;
-use yii\helpers\Url;
 use yii\web\Controller;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 class SignupController extends Controller
 {
@@ -23,9 +24,7 @@ class SignupController extends Controller
                         'roles' => ['?']
                     ]
                 ],
-                'denyCallback' => function ($rule, $action) {
-                    return Yii::$app->response->redirect(['task/index']);
-                }
+                'denyCallback' => fn ($rule, $action) => Yii::$app->response->redirect(['task/index'])
             ]
         ];
     }
@@ -50,5 +49,18 @@ class SignupController extends Controller
             'city' => $city,
             'signupForm' => $signupForm
         ]);
+    }
+
+    public function actionValidateEmail()
+    {
+        // validate for ajax request
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $signupForm = new SignupForm();
+            $signupForm->load(Yii::$app->request->post());
+
+            return ActiveForm::validate($signupForm);
+        }
     }
 }

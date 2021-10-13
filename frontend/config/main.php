@@ -1,8 +1,5 @@
 <?php
 
-use yii\web\JqueryAsset;
-use yii\web\YiiAsset;
-use yii\widgets\ActiveFormAsset;
 
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
@@ -14,6 +11,7 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
+    'language' => 'ru-RU',
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
@@ -57,11 +55,6 @@ return [
         ],
         'assetManager' => [
             'linkAssets' => true,
-            'bundles' => [
-                JqueryAsset::class => false,
-                ActiveFormAsset::class => false,
-                YiiAsset::class => false,
-            ],
         ],
     ],
     'params' => $params,

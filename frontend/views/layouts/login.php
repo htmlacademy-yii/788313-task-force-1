@@ -222,7 +222,6 @@ AppAsset::register($this);
 </div>
 <div class="overlay"></div>
 <?php $this->endBody() ?>
-<script src="/js/validate.js"></script>
 </body>
 </html>
 <?php $this->endPage() ?>

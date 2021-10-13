@@ -17,12 +17,13 @@ class AppAsset extends AssetBundle
         'css/style.css',
     ];
     public $js = [
-        'js/main.js',
         'js/dropzone.js',
         'js/messenger.js',
+        'js/main.js',
     ];
     public $depends = [
-        /*'yii\web\YiiAsset',*/
+        'yii\web\JqueryAsset',
+        'yii\web\YiiAsset',
         /*'yii\bootstrap\BootstrapAsset',*/
     ];
 }
