@@ -1,16 +1,16 @@
 <?php
 
 use yii\helpers\Html;
-use \yii\i18n\Formatter;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use \yii\widgets\Pjax;
 use yii\helpers\Url;
+use \yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $tasks frontend\controllers\TaskController */
 /* @var $taskForm frontend\controllers\TaskController */
 /* @var $categories frontend\controllers\TaskController */
+/* @var $cat frontend\controllers\TaskController */
 
 $this->title = 'Новые задания';
 ?>
@@ -24,7 +24,7 @@ $this->title = 'Новые задания';
                 <div class="new-task__card">
                     <div class="new-task__title">
                         <a href="<?php echo Url::to(['task/view', 'id' => $task->id]); ?>" class="link-regular"><h2><?php echo $task->title; ?></h2></a>
-                        <a  class="new-task__type link-regular" href="#"><p><?php echo $task->category->name; ?></p></a>
+                        <a  class="new-task__type link-regular" href="<?php echo Url::to(['task/index', 'cat' => $task->category->code]); ?>"><p><?php echo $task->category->name; ?></p></a>
                     </div>
                     <div class="new-task__icon new-task__icon--<?php echo $task->category->code; ?>"></div>
                     <p class="new-task_description">
@@ -47,6 +47,7 @@ $this->title = 'Новые задания';
                 </ul>
             </div>
         </section>
+        <?php if (!$cat): ?>
         <section class="search-task">
             <div class="search-task__wrapper">
                 <?php $form = ActiveForm::begin([
@@ -63,7 +64,7 @@ $this->title = 'Новые задания';
                         <legend>Категории</legend>
                         <?php echo $form->field($taskForm, 'category_id', [
                             'template' => '{input}',
-                            'labelOptions' =>['class' => 'checkbox__legend']
+                            'labelOptions' => ['class' => 'checkbox__legend']
                         ])->checkboxList(ArrayHelper::map($categories, 'id', 'name'),
                             ['item' => function ($index, $label, $name, $checked, $value) {
                                 $chek = $checked ? 'checked' : '';
@@ -91,7 +92,7 @@ $this->title = 'Новые задания';
                     </fieldset>
                     <div class="field-container">
                         <?php echo $form->field($taskForm, 'period', [
-                            'labelOptions' =>['class' => 'search-task__name'],
+                            'labelOptions' => ['class' => 'search-task__name'],
                             'template' => '{label} {input}',
                         ])->
                         dropDownList(['day' => 'За день', 'week' => 'За неделю', 'month' => 'За месяц', '' => 'За всё время'],[
@@ -101,7 +102,7 @@ $this->title = 'Новые задания';
                     </div>
                     <div class="field-container">
                         <?php echo $form->field($taskForm, 'search', [
-                            'labelOptions' =>['class' => 'search-task__name'],
+                            'labelOptions' => ['class' => 'search-task__name'],
                             'template' => '{label} {input}',
                         ])->textInput(['class' => 'input-middle input'])->label('Поиск по названию');
                         ?>
@@ -110,5 +111,6 @@ $this->title = 'Новые задания';
                 <?php $form = ActiveForm::end();?>
             </div>
         </section>
+        <?php endif; ?>
     </div>
 </main>
